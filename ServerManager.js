@@ -1,6 +1,7 @@
 //  Log Manager
 var moment = require('moment');
 var winston = require('winston');
+var fs = require('fs-extra');
 var logger = new (winston.Logger)({
     transports: [
       new (winston.transports.Console)(),
@@ -8,6 +9,7 @@ var logger = new (winston.Logger)({
     ]
 });
 
+fs.ensureDirSync(__dirname + '/logs');
 
 logger.info("===================================");
 logger.info(" Starting Multiroom Server Manager ");
