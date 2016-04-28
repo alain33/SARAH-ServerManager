@@ -1,0 +1,46 @@
+{
+  "name": "sarah-servermanager",
+  "version": "1.0.0",
+  "description": "SARAH multi-room server manager",
+  "main": "ServerManager.js",
+  "dependencies": {
+    "chokidar": "^1.4.3",
+    "extend": "^3.0.0",
+    "fs-extra": "^0.29.0",
+    "moment": "^2.13.0",
+    "express": "^4.13.4",
+    "path": "^0.12.7",
+    "request": "^2.72.0",
+    "require-fu": "^1.0.0",
+    "socket.io": "^1.4.5",
+    "require-uncache": "^0.0.2",
+    "socket.io-stream": "^0.9.0",
+    "underscore": "^1.8.3",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spikharpax/sarah-servermanager.git"
+  },
+  "keywords": [
+    "SARAH",
+    "multi-room",
+    "multiroom"
+  ],
+  "author": {
+    "name": "Spikharpax"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Spikharpax/sarah-servermanager/issues"
+  },
+  "homepage": "https://github.com/Spikharpax/sarah-servermanager#readme",
+  "readme": "ERROR: No README data found!",
+  "_id": "sarah-servermanager@1.0.0",
+  "_shasum": "06faec6512a02f03c3d54b1627977768ebd86dfb",
+  "_from": "sarah-servermanager@latest"
+}

@@ -1,0 +1,18 @@
+{
+	"version" : "1.0",
+	"http" : {
+		"port"      : 3000,
+		"ip"        : "127.0.0.1"
+	},
+	"root" : {
+		"folders"  : "/Apps/working/plugins;/Apps/working/script",
+		"ignored"  : "/Apps/working/plugins/tvSchedule/portlet.html;*.css"
+	},
+	"notification" : {
+		"sendType" : "pushover",
+		"pushoverUser" : "PushOver_USER",
+		"pushoverToken" : "PushOver_TOKEN",
+		"SMSuser" : "SMS_USER",
+		"SMStoken" : "SMS_TOKEN"
+	}
+}
