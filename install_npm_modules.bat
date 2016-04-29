@@ -10,3 +10,5 @@ call npm install require-uncache@0.0.2
 call npm install socket.io-stream@0.9.0
 call npm install underscore@1.8.3
 call npm install winston@2.2.0
+echo npm modules installation done.
+pause

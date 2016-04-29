@@ -1,19 +1,15 @@
 Multi-room Server Manager
 =========================
 
-Pourquoi ?
-----------
+## Pourquoi ?
 - Pour que chaque Sarah installée (client et serveur) dans un multi-room soit vue comme un client unique d'un système global.
 - Pour que chaque client Sarah puisse communiquer et partager des informations avec les autres clients.
 - Pour avoir un système multi-room toujours opérationnel (e.g. un client que ne fonctionne plus dû à un plantage system/harware d'un client).
 - Pour supprimer les latences réseaux dû au montage de répertoires (e.g. plugins).
 		
-Comment ?
----------
-L'application est en 2 parties:
-- Une première partie "ServerManager", application nodejs indépendante, qui gère le multiroom et les clients Sarah qui se connectent.
-- Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le Server Manager.
-	
+## Comment ?
+- L'application est en 2 parties:
+	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multiroom et les clients Sarah qui se connectent. Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le Server Manager.
 - Communication synchrone entre le Server Manager et tous les client Manager.
 - Gestion des fichiers:
 	- Création/Modification/Suppression d'un fichier/répertoire:
@@ -27,22 +23,21 @@ L'application est en 2 parties:
 - Gestion de l'application des modifications:
 	- Si necessaire, redémarrage automatique du serveur et/ou du client de chaque client Sarah pour enregistrer des modifications de fichiers en fonction du type (js,xml,prop,etc...).
 - Alerte de déconnexion:
-	- Un message d'alerte est envoyé lorsqu'un client ou le Server Manager se déconnecte afin d'avertir des problèmes système/hardware.
+	- Un message d'alerte est envoyé lorsqu'un client ou le Server Manager se déconnecte afin d'avertir des problèmes système/hardware sur un composant du multi-room.
 - Mode inter-comm:
 	- Permet d'envoyer un message vocale depuis un client vers un autre client ou tous les clients via le Server Manager.
 - Evolutif:
 	- Répertoire plugins sur le Server Manager pour développer ses propres actions pour le Server Manager, par exemple pour ajouter des requètes HTTP, gérer et modifier des fichiers, etc...
 		
-Compatibilité
--------------
+## Compatibilité
 - Le ServerManager peut être installé sur Windows ou Unix.
 - Le clientManager est compatible Sarah V3 et Sarah V4.
 	
-Installation
-------------
+## Installation
 
-## Serveur
+### Serveur
 - Installez [nodejs](https://nodejs.org/en) sur la plateforme où sera installé ServerManager.
+	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installtion de votre choix.
 - Créez un répertoire parent pour ServerManager, par exemple c:/Apps/multiroom.	
 	- Important: N'utilisez pas de caractères d'espacements dans le nom du répertoire.
 - Téléchargez et dézippez le fichier 'SARAH-ServerManager-master.zip' dans le répertoire créé.
@@ -58,24 +53,26 @@ Le message 'info: Multiroom Server Manager ready [X.XXX secs] doit apparaitre sa
 Quelques paramètres sont à personnaliser pour finaliser l'installation.
 
 
-##  Client
-- Récupérez le <ServerManager>/client_install/clientManager.zip et copiez-le dans le répertoire <Sarah>/plugins du client Sarah de votre multi-room.
+###  Client
+- Du fait de la version non compatible de nodejs sur les versions courantes de Sarah, installez [nodejs](https://nodejs.org/en) sur la plateforme du client Sarah de votre multi-room.
+	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installtion de votre choix en dehors de Sarah.
+- Récupérez le ServerManager/client_install/clientManager.zip et copiez-le dans le répertoire Sarah/plugins du client Sarah de votre multi-room.
 - Dézippez le fichier.
-- Supprimez le fichier <Sarah>/plugins/clientManager.zip après l'extraction.
-- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire <Sarah>/plugins/clientManager.	
+- Supprimez le fichier Sarah/plugins/clientManager.zip après l'extraction.
+- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire Sarah/plugins/clientManager.	
 - Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
 - Attendez quelques secondes pendant l'installation des modules npm nécessaires à l'application.
 - Répetez l'opération pour tous les Sarah de votre multi-room.
 
 Quelques paramètres sont à personnaliser pour finaliser l'installation.
 	
-Propriétés
-----------
+	
+## paramètres
 
-## Serveur
+### Serveur
 	
 
-## Client
+### Client
 
 
 
