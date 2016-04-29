@@ -10,24 +10,24 @@ Multi-room Server Manager
 ## Comment ?
 - L'application est en 2 parties:
 	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multiroom et les clients Sarah qui se connectent. Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le Server Manager.
-- Communication synchrone entre le Server Manager et tous les client Manager.
+- Communication synchrone entre le ServerManager et tous les clientManager.
 - Gestion des fichiers:
 	- Création/Modification/Suppression d'un fichier/répertoire:
-		- Sur le server Manager sera automatiquement envoyé sur tous les clients. Si un client est déconnecté, la modification sera envoyé lors de sa prochaine connexion.
-		- Sur un client sera automatiquement envoyé sur le Server Manager qui l'enverra à son tour sur tous les autres clients.
+		- Sur le serverManager sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyé lors de sa prochaine connexion.
+		- Sur un client sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour sur tous les autres clients.
 - Gestion des versions de fichiers:
 	- Permet de gérer pour chaque client une version différente de fichier.
 	- Chaque client peut avoir des plugins, des xml, des js, des fichiers de propriétés différents.
 - Gestion de requètes HTTP:
-	- Le Server Manager recoit et centralise des requètes HTTP (e.g. provenant d'une box domotique) qui sont envoyés automatiquement vers tous les clients ou un client dédié.
+	- Le ServerManager recoit et centralise des requètes HTTP (e.g. provenant d'une box domotique) qui sont envoyés automatiquement vers tous les clients ou un client dédié.
 - Gestion de l'application des modifications:
 	- Si necessaire, redémarrage automatique du serveur et/ou du client de chaque client Sarah pour enregistrer des modifications de fichiers en fonction du type (js,xml,prop,etc...).
 - Alerte de déconnexion:
-	- Un message d'alerte est envoyé lorsqu'un client ou le Server Manager se déconnecte afin d'avertir des problèmes système/hardware sur un composant du multi-room.
+	- Un message d'alerte est envoyé lorsqu'un client ou le ServerManager se déconnecte afin d'avertir des problèmes système/hardware sur un composant du multi-room.
 - Mode inter-comm:
-	- Permet d'envoyer un message vocale depuis un client vers un autre client ou tous les clients via le Server Manager.
+	- Permet d'envoyer un message vocale depuis un client vers un autre client ou tous les clients via le ServerManager.
 - Evolutif:
-	- Répertoire plugins sur le Server Manager pour développer ses propres actions pour le Server Manager, par exemple pour ajouter des requètes HTTP, gérer et modifier des fichiers, etc...
+	- Répertoire plugins sur le ServerManager pour développer ses propres actions pour le ServerManager, par exemple pour ajouter des requètes HTTP, gérer et modifier des fichiers, etc...
 		
 ## Compatibilité
 - Le ServerManager peut être installé sur Windows ou Unix.
@@ -37,7 +37,7 @@ Multi-room Server Manager
 
 ### Serveur
 - Installez [nodejs](https://nodejs.org/en) sur la plateforme où sera installé ServerManager.
-	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installtion de votre choix.
+	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installation de votre choix.
 - Créez un répertoire parent pour ServerManager, par exemple c:/Apps/multiroom.	
 	- Important: N'utilisez pas de caractères d'espacements dans le nom du répertoire.
 - Téléchargez et dézippez le fichier 'SARAH-ServerManager-master.zip' dans le répertoire créé.
@@ -50,26 +50,64 @@ Multi-room Server Manager
 Localisez et double-cliquez sur le fichier de lancement 'ServerManager.bat'.
 Le message 'info: Multiroom Server Manager ready [X.XXX secs] doit apparaitre sans erreurs à la fin de l'initialisation.
  
-Quelques paramètres sont à personnaliser pour finaliser l'installation.
+Quelques propriétés sont à personnaliser pour finaliser l'installation.
 
 
 ###  Client
 - Du fait de la version non compatible de nodejs sur les versions courantes de Sarah, installez [nodejs](https://nodejs.org/en) sur la plateforme du client Sarah de votre multi-room.
-	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installtion de votre choix en dehors de Sarah.
-- Récupérez le ServerManager/client_install/clientManager.zip et copiez-le dans le répertoire Sarah/plugins du client Sarah de votre multi-room.
+	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installation de votre choix en dehors de Sarah.
+- Récupérez le #ServerManager#/client_install/clientManager.zip et copiez-le dans le répertoire #Sarah#/plugins du client Sarah de votre multi-room.
 - Dézippez le fichier.
-- Supprimez le fichier Sarah/plugins/clientManager.zip après l'extraction.
-- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire Sarah/plugins/clientManager.	
+- Supprimez le fichier #Sarah#/plugins/clientManager.zip après l'extraction.
+- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire #Sarah#/plugins/clientManager.	
 - Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
 - Attendez quelques secondes pendant l'installation des modules npm nécessaires à l'application.
 - Répetez l'opération pour tous les Sarah de votre multi-room.
 
-Quelques paramètres sont à personnaliser pour finaliser l'installation.
+Quelques propriétés sont à personnaliser pour finaliser l'installation.
 	
 	
 ## paramètres
 
 ### Serveur
+Les propriétés sont définies dans le fichier #ServerManager#/ServerManager.prop
+
+#### http.port
+Port HTTP pour la communication entre le ServerManager et les Sarah clientManager.
+
+#### http.ip
+Adresse réseau du serveur pour la communication entre le ServerManager et les Sarah clientManager.
+
+#### root.folders
+Répertoires synchronisés par le ServerManager. Toutes les modifications faites dans les fichiers/répertoires dans ces répertoires seront automatiquement reproduites sur les clients.
+##### Important:
+- Ces répertoires doivent être dans le même file system que l'application ServerManager.
+- Les chemins doivent être absolus et au format Unix (un slash ('/') en début de chemin).
+- Les chemins sont séparés par des points-virgules (';').
+
+Exemple pour 2 répertoires 'c:\Apps\working\plugins' et 'c:\Apps\working\script' :
+```text
+"root" : {
+		"folders"  : "/Apps/working/plugins;/Apps/working/script",	
+		....
+```
+
+#### root.ignored
+Fichiers non synchronisés par le ServerManager dans les répertoires définis dans le paramètre root.folders.
+Format :
+- Chemin en absolu pour définir un fichier spécifique.
+- Chemin en relatif pour définir une extention de fichier à ignorer globalement. 
+##### Important:
+- Les chemins en absolus doivent être au format Unix (un slash ('/') en début de chemin).
+- Les Fichiers sont séparés par des points-virgules (';').
+
+Exemple pour 'c:\Apps\working\plugins\tvSchedule\portlet.html' et un type de fichier 'css' à ignorer :
+```text
+"root" : {
+		....	
+		"ignored"  : "/Apps/working/plugins/tvSchedule/portlet.html;*.css"
+		....
+```
 	
 
 ### Client
