@@ -9,11 +9,12 @@ Multi-room Server Manager
 		
 ## Comment ?
 - L'application est en 2 parties:
-	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multiroom et les clients Sarah qui se connectent. Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le Server Manager.
+	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multiroom et les clients Sarah qui se connectent.
+	- Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le ServerManager.
 - Communication synchrone entre le ServerManager et tous les clientManager.
 - Gestion des fichiers:
 	- Création/Modification/Suppression d'un fichier/répertoire:
-		- Sur le serverManager sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyé lors de sa prochaine connexion.
+		- Sur le ServerManager sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyé lors de sa prochaine connexion.
 		- Sur un client sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour sur tous les autres clients.
 - Gestion des versions de fichiers:
 	- Permet de gérer pour chaque client une version différente de fichier.
@@ -50,7 +51,7 @@ Multi-room Server Manager
 Localisez et double-cliquez sur le fichier de lancement 'ServerManager.bat'.
 Le message 'info: Multiroom Server Manager ready [X.XXX secs] doit apparaitre sans erreurs à la fin de l'initialisation.
  
-Quelques propriétés sont à personnaliser pour finaliser l'installation.
+Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'installation.
 
 
 ###  Client
@@ -64,7 +65,7 @@ Quelques propriétés sont à personnaliser pour finaliser l'installation.
 - Attendez quelques secondes pendant l'installation des modules npm nécessaires à l'application.
 - Répetez l'opération pour tous les Sarah de votre multi-room.
 
-Quelques propriétés sont à personnaliser pour finaliser l'installation.
+Quelques [propriétés](#client-1) sont à personnaliser pour finaliser l'installation.
 	
 	
 ## paramètres
@@ -98,6 +99,7 @@ Fichiers non synchronisés par le ServerManager dans les répertoires définis d
 Format :
 - Chemin en absolu pour définir un fichier spécifique.
 - Chemin en relatif pour définir une extention de fichier à ignorer globalement. 
+
 ##### Important:
 - Les chemins en absolus doivent être au format Unix (un slash ('/') en début de chemin).
 - Les Fichiers sont séparés par des points-virgules (';').
@@ -111,22 +113,22 @@ Exemple pour 'c:\Apps\working\plugins\tvSchedule\portlet.html' et un type de fic
 ```
 	
 #### notification#sendType (v:String)
-Type de notification lors d'une déconnection d'un client.
+Type de notification lors d'une déconnexion d'un client.
 
 Par défaut, 2 types sont possibles:
 - pushover
 - free
 
-Le type défini dans cette propriété est le nom du fichier js associé dans le répertoire #ServerManager#/notify qui envoie la notification.
+Le type défini dans cette propriété est le nom du fichier js associé dans le répertoire #ServerManager#/notify qui envoie la notification. Par exemple, 'pushover' est le nom du fichier js 'pushover.js' dans le répertoire.
 
 2 paramètres  d'identification associés sont définis par défaut:
 - "pushoverUser" et "pushoverToken" pour pushover.
 - "SMSuser" et "SMStoken" pour free SMS.
 
 Pour créer un autre type d'envoi:
-- Copiez un des 2 fichiers js du répertoire #ServerManager#/notify et modifiez-le pour votre type d'envoi.
+- Copiez 1 des 2 fichiers js du répertoire #ServerManager#/notify avec le nom que vous voulez et modifiez-le pour votre type d'envoi.
 - Utilisez les paramètres d'identification par défaut où ajoutez les votres.
-- Le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
+- Aucune autre modification n'est requise, le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
 	
 	
 
