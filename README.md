@@ -9,7 +9,7 @@ Multi-room Server Manager
 		
 ## Comment ?
 - L'application est en 2 parties:
-	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multiroom et les clients Sarah qui se connectent.
+	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multi-room et les clients Sarah qui se connectent.
 	- Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le ServerManager.
 - Communication synchrone entre le ServerManager et tous les clientManager.
 - Gestion des fichiers:
@@ -39,7 +39,7 @@ Multi-room Server Manager
 ### Serveur
 - Installez [nodejs](https://nodejs.org/en) sur la plateforme où sera installé ServerManager.
 	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installation de votre choix.
-- Créez un répertoire parent pour ServerManager, par exemple c:/Apps/multiroom.	
+- Créez un répertoire parent pour ServerManager, par exemple c:/Apps/multi-room.	
 	- Important: N'utilisez pas de caractères d'espacements dans le nom du répertoire.
 - Téléchargez et dézippez le fichier 'SARAH-ServerManager-master.zip' dans le répertoire créé.
 - Renommez le répertoire créé en 'ServerManager'.
@@ -49,7 +49,7 @@ Multi-room Server Manager
 
 ##### Test d'installation
 Localisez et double-cliquez sur le fichier de lancement 'ServerManager.bat'.
-Le message 'info: Multiroom Server Manager ready [X.XXX secs] doit apparaitre sans erreurs à la fin de l'initialisation.
+Le message 'info: multi-room Server Manager ready [X.XXX secs] doit apparaitre sans erreurs à la fin de l'initialisation.
  
 Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'installation.
 
@@ -57,10 +57,10 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 ###  Client
 - Du fait de la version non compatible de nodejs sur les versions courantes de Sarah, installez [nodejs](https://nodejs.org/en) sur la plateforme du client Sarah de votre multi-room.
 	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installation de votre choix en dehors de Sarah.
-- Récupérez le #ServerManager#/client_install/clientManager.zip et copiez-le dans le répertoire #Sarah#/plugins du client Sarah de votre multi-room.
+- Récupérez le #ServerManager#/client_install/clientManager.zip et copiez-le dans le répertoire SARAH/plugins du client Sarah de votre multi-room.
 - Dézippez le fichier.
-- Supprimez le fichier #Sarah#/plugins/clientManager.zip après l'extraction.
-- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire #Sarah#/plugins/clientManager.	
+- Supprimez le fichier SARAH/plugins/clientManager.zip après l'extraction.
+- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire SARAH/plugins/clientManager.	
 - Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
 - Attendez quelques secondes pendant l'installation des modules npm nécessaires à l'application.
 - Répetez l'opération pour tous les Sarah de votre multi-room.
@@ -130,10 +130,68 @@ Pour créer un autre type d'envoi:
 - Utilisez les paramètres d'identification par défaut où ajoutez les votres.
 - Aucune autre modification n'est requise, le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
 	
-	
-
 ### Client
 
+#### client (v:String)
+Le nom du client dans le multi-room.
+
+Exemple pour un client Sarah 'Salon' :
+```text
+"client" : "Salon",
+		....
+```
+
+#### http#local#ip#client (v:String)
+Adresse réseau du client micro Sarah.
+
+#### http#local#ip#server (v:String)
+Adresse réseau du serveur Sarah.
+
+#### http#serverManager#port (v:Integer)
+Port HTTP pour la communication entre le ServerManager et les Sarah clientManager. Doit être le même que défini dans la propriété http#port du ServerManager.prop
+
+#### http#serverManager#ip (v:String)
+Adresse réseau du ServerManager. Doit être le même que défini dans la propriété http#ip du ServerManager.prop
+
+#### root#watch (v:String)
+Fichiers synchronisés par le clientManager. Toutes les modifications/suppressions faites sur ces fichiers seront automatiquement reproduites sur le ServerManager.
+
+##### Important:
+- Le clientManager ne synchronise que des fichiers, ne pas mettre de répertoires.
+- Les chemins des fichiers doivent être en relatif à partir du répertoire principal de Sarah et au format Unix (un slash ('/') en début de chemin).
+- Les fichiers sont séparés par des points-virgules (';').
+
+Exemple pour 2 fichiers 'SARAH/plugins/scenariz/lib/db/ScenariznoCron.db' et 'SARAH/plugins/tvSchedule/lib/db/tvSchedule.db' :
+```text
+"root" : {
+		"watch"  : "plugins/scenariz/lib/db/ScenariznoCron.db;plugins/scenariz/lib/db/Scenariz.db",	
+		....
+```
+
+#### root#deleteIgnored (v:String)
+Fichiers ignorés par la synchronisation lors de leurs suppressions. 
+Utile par exemple pour les fichiers de bases nedb qui sont d'abord supprimés puis ensuite recréés lors de leurs modification, ce qui posent quelques problèmes de synchronisation. 
+
+##### Important:
+- Le clientManager ne synchronise que des fichiers, ne pas mettre de répertoires.
+- Les chemins des fichiers doivent être en relatif à partir du répertoire principal de SARAH et au format Unix (un slash ('/') en début de chemin).
+- Les fichiers sont séparés par des points-virgules (';').
+
+
+#### root#folders (v:String)
+Répertoires synchronisés par le ServerManager. Si un fichier inclut dans ces répertoires n'est pas identique au fichier du ServerManager, celui-ci est mis à jour automatiquement à l'initialisation du clientManager.
+
+##### Important:
+- Le répertoire doit être en relatif à partir du répertoire principal de SARAH.
+- Normalement, les répertoires définis ici sont identiques aux répertoires définis dans la propriétés root#folders du fichier ServerManager.prop (mais en relatif).
+ 
+Exemple pour 2 répertoires 'SARAH/plugins' et 'SARAH/macros'(SARAH V3) :
+```text
+"root" : {
+		"folders"  : "plugins;macros"
+		....
+```
+ 
 
 
 
