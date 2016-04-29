@@ -72,14 +72,14 @@ Quelques propriétés sont à personnaliser pour finaliser l'installation.
 ### Serveur
 Les propriétés sont définies dans le fichier #ServerManager#/ServerManager.prop
 
-#### http.port
+#### http#port (v:Integer)
 Port HTTP pour la communication entre le ServerManager et les Sarah clientManager.
 
-#### http.ip
-Adresse réseau du serveur pour la communication entre le ServerManager et les Sarah clientManager.
+#### http#ip (v:String)
+Adresse réseau du serveur.
 
-#### root.folders
-Répertoires synchronisés par le ServerManager. Toutes les modifications faites dans les fichiers/répertoires dans ces répertoires seront automatiquement reproduites sur les clients.
+#### root#folders (v:String)
+Répertoires synchronisés par le ServerManager. Toutes les modifications faites dans les fichiers/répertoires de ces répertoires seront automatiquement reproduites sur les clients.
 ##### Important:
 - Ces répertoires doivent être dans le même file system que l'application ServerManager.
 - Les chemins doivent être absolus et au format Unix (un slash ('/') en début de chemin).
@@ -92,8 +92,9 @@ Exemple pour 2 répertoires 'c:\Apps\working\plugins' et 'c:\Apps\working\script
 		....
 ```
 
-#### root.ignored
+#### root#ignored (v:String)
 Fichiers non synchronisés par le ServerManager dans les répertoires définis dans le paramètre root.folders.
+
 Format :
 - Chemin en absolu pour définir un fichier spécifique.
 - Chemin en relatif pour définir une extention de fichier à ignorer globalement. 
@@ -108,6 +109,25 @@ Exemple pour 'c:\Apps\working\plugins\tvSchedule\portlet.html' et un type de fic
 		"ignored"  : "/Apps/working/plugins/tvSchedule/portlet.html;*.css"
 		....
 ```
+	
+#### notification#sendType (v:String)
+Type de notification lors d'une déconnection d'un client.
+
+Par défaut, 2 types sont possibles:
+- pushover
+- free
+
+Le type défini dans cette propriété est le nom du fichier js associé dans le répertoire #ServerManager#/notify qui envoie la notification.
+
+2 paramètres  d'identification associés sont définis par défaut:
+- "pushoverUser" et "pushoverToken" pour pushover.
+- "SMSuser" et "SMStoken" pour free SMS.
+
+Pour créer un autre type d'envoi:
+- Copiez un des 2 fichiers js du répertoire #ServerManager#/notify et modifiez-le pour votre type d'envoi.
+- Utilisez les paramètres d'identification par défaut où ajoutez les votres.
+- Le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
+	
 	
 
 ### Client
