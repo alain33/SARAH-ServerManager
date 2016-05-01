@@ -131,6 +131,7 @@ Pour créer un autre type d'envoi:
 - Aucune autre modification n'est requise, le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
 	
 ### Client
+Les propriétés sont définies dans le fichier clientManager.prop du plugin.
 
 #### client (v:String)
 Le nom du client dans le multi-room.
@@ -178,16 +179,25 @@ Utile par exemple pour les fichiers de bases nedb qui sont d'abord supprimés pu
 - Les fichiers sont séparés par des points-virgules (';').
 
 
+Exemple pour 2 fichiers 'SARAH/plugins/scenariz/lib/db/ScenariznoCron.db' et 'SARAH/plugins/tvSchedule/lib/db/tvSchedule.db' :
+```text
+"root" : {
+		....
+		"deleteIgnored"  : "plugins/scenariz/lib/db/ScenariznoCron.db;plugins/scenariz/lib/db/Scenariz.db",	
+		....
+```
+
 #### root#folders (v:String)
-Répertoires synchronisés par le ServerManager. Si un fichier inclut dans ces répertoires n'est pas identique au fichier du ServerManager, celui-ci est mis à jour automatiquement à l'initialisation du clientManager.
+Répertoires à scanner lors de l'initialisation du plugin. Si un fichier inclut dans ces répertoires n'est pas identique à celui du ServerManager, il est mis à jour automatiquement.
 
 ##### Important:
-- Le répertoire doit être en relatif à partir du répertoire principal de SARAH.
+- Les répertoires doivent être en relatif à partir du répertoire principal de SARAH.
 - Normalement, les répertoires définis ici sont identiques aux répertoires définis dans la propriétés root#folders du fichier ServerManager.prop (mais en relatif).
  
 Exemple pour 2 répertoires 'SARAH/plugins' et 'SARAH/macros'(SARAH V3) :
 ```text
 "root" : {
+		....
 		"folders"  : "plugins;macros"
 		....
 ```
