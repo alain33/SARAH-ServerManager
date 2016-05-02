@@ -5,7 +5,8 @@ var ss = require('socket.io-stream')
 	, logger
 	, app
 	, clients = []
-	, io;
+	, io
+	, changedFrom;
 
 var setSockets = function (http) {
 	
@@ -13,6 +14,9 @@ var setSockets = function (http) {
 	io.on('connect', function(client){
 	 
 		client.on('client_connect', function (from, server_ip, port, client_ip, loopback) {
+			clients = _.filter(clients, function(num){ 
+					return num.id != from;
+			});
 			logger.info('Client %s connected', from);
 			clients.push ({id: from, server_ip: server_ip, server_port: port, client_ip: client_ip, loopback: loopback, Obj: client});
 			client.emit('connected');
@@ -99,6 +103,7 @@ var setSockets = function (http) {
 				var stream = ss.createStream(); 
 				ss(client).emit('send_file', item, stream);
 				logger.info ("Receive %s from %s", srvItem, from);
+				changedFrom = from;
 				stream.pipe(fs.createOutputStream(srvItem));
 				stream.on('data', function (data) {
 					// Do nothing
@@ -127,16 +132,24 @@ var sendnotif = function (client) {
 
 
 var change = function (data, srvDir) {
+	
 	_.map(clients, function(num) {
-		num.Obj.emit('receive_data', data, srvDir);
+		if (changedFrom && num.id != changedFrom) 
+			num.Obj.emit('receive_data', data, srvDir);
 	});
+	
+	changedFrom = null;
 }
 
 
 var remove = function (data, srvDir) {
+	
 	_.map(clients, function(num) {
-		num.Obj.emit('remove_data', data, srvDir);
+		if (changedFrom && num.id != changedFrom)
+			num.Obj.emit('remove_data', data, srvDir);
 	});
+	
+	changedFrom = null;
 }
 
 
