@@ -43,6 +43,7 @@ Multi-room Server Manager
 - [Gestion de la version des fichiers](#gestion-de-la-version-des-fichiers)	
 - [Commandes client](#commandes-client)
 - [Développement](#développement)
+	- [API](#api)
 	- [Exemples](#exemples-de-développement)
 	- [Requête HTTP](#requête-http)
 
@@ -318,7 +319,7 @@ Pour cacher l'icône de tâche du client dans le menu démarrer.
 Pour minimiser la fenêtre du serveur.
 
 #### restart#hideServer (v:Boolean)
-Pour cacher la fenêtre du server.
+Pour cacher la fenêtre du serveur.
 
 #### notification#sendType (v:String)
 Type de notification lors d'une déconnexion du ServerManager.
@@ -432,7 +433,7 @@ exports.action = function (data, logger, app) {
 - app:  Objet global de l'application ServerManager
 - logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
 
-### Fonction utile
+### API
 ```javascript
 var clients = app.Socket.getClients();
 ```
@@ -443,6 +444,12 @@ Retourne un tableau des clients connectés au multi-room où:
 - client_ip: L'adresse IP du client SARAH du client
 - loopback: Le port HTTP du client SARAH du client
 - Obj: L'objet socket ouvert pour la communication entre le client et le ServerManager
+
+```javascript
+var config = app.Config.getConfig();
+```
+Retourne un tableau des [propriétés](#serveur-1) de ServerManager
+
 
 ### Exemples de développement
 2 exemples de plugins sont dans le répertoire plugins de ServerManager:
