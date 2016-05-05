@@ -31,6 +31,19 @@ Multi-room Server Manager
 - Evolutif:
 	- Répertoire plugins sur le ServerManager pour développer ses propres actions pour le ServerManager, par exemple pour ajouter des requètes HTTP, gérer et modifier des fichiers, etc...
 		
+## Table des matières		
+- [Compatibilité](#compatibilité)	
+- [Installation](#installation)		
+	- [Serveur](#serveur)
+	- [Client](#client)
+- [Paramètres](#paramètres)
+	- [Serveur](#serveur-1)
+	- [Client](#client-1)
+- [Commandes client](#Commandes-client)
+- [Développement](#développement)
+	- [Exemples](#exemples-de-développement)
+	- [Requête HTTP](#requête-http)
+
 ## Compatibilité
 - Le ServerManager peut être installé sur Windows ou Unix.
 - Le clientManager est compatible Sarah V3 et Sarah V4.
@@ -426,7 +439,7 @@ Retourne un tableau des clients connectés au multi-room où:
 2 exemples de plugins sont dans le répertoire plugins de ServerManager:
 - speakTo.js : Pour envoyer un tts vers le(s) client(s) de votre choix.
 - tvSchedule.js: 
-	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences (et une box domotique) qui va envoyer la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit diffusé vers tous les clients automatiquement. Reste plus qu'au plugin SARAH concerné de lire ce fichier et executer ou ignorer l'action.
+	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences (et une box domotique) qui va envoyer la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit diffusé vers tous les clients automatiquement. Reste plus qu'aux plugins SARAH concernés de lire ce fichier et executer ou ignorer l'action.
 	
 ### Requête HTTP
 Format:
@@ -434,7 +447,3 @@ Format:
 
 Exemple:
 - http://192.168.1.67:3000/SM/tvSchedule?command=setConfig&room=Salon
-
-
-
-
