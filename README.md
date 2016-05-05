@@ -7,7 +7,8 @@ Multi-room Server Manager
 - Pour supprimer les latences réseaux dû au montage de répertoires.
 - Pour populer les informations (plugins, mise à jour, etc...) sans se connecter sur chaque système.
 - Pour que tous les clients soient synchronisés, puissent communiquer et partager des informations avec les autres clients.		
-		
+- Pour simplifier la communication de tous les clients avec une box domotique en centralisant la communication.
+	
 ## Comment ?
 - L'application est en 2 parties:
 	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multi-room et les clients Sarah qui se connectent.
