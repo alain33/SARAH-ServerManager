@@ -39,7 +39,7 @@ Multi-room Server Manager
 - [Paramètres](#paramètres)
 	- [Serveur](#serveur-1)
 	- [Client](#client-1)
-- [Commandes client](#Commandes-client)
+- [Commandes client](#commandes-client)
 - [Développement](#développement)
 	- [Exemples](#exemples-de-développement)
 	- [Requête HTTP](#requête-http)
@@ -342,7 +342,7 @@ Pour créer un autre type d'envoi:
 Chemin d'accès à l'application sox pour le mode inter-com.
 
 Installez l'application [sox](http://sourceforge.net/projects/sox/files/sox/14.4.2),
-disponible aussi dans le répertoire #clientManager#/install'.
+disponible aussi dans le répertoire #clientManager#/install.
 
 Exemple pour un répertoire d'installation C:\\Apps\\sox-14-4-2 : 
 ```text
