@@ -40,6 +40,7 @@ Multi-room Server Manager
 - [Paramètres](#paramètres)
 	- [Serveur](#serveur-1)
 	- [Client](#client-1)
+- [Gestion de la version des fichiers](#gestion-de-la-version-des-fichiers)	
 - [Commandes client](#commandes-client)
 - [Développement](#développement)
 	- [Exemples](#exemples-de-développement)
@@ -354,6 +355,13 @@ Exemple pour un répertoire d'installation C:\\Apps\\sox-14-4-2 :
 
 #### intercom#timeRecord (v:Integer)
 Délais maximal d'enregistrement du message vocale, après ce délais, l'action est intérrompu.
+
+
+## Gestion de la version des fichiers
+
+Under construction...
+
+
 
 ## Commandes client
 Quelques commandes sont définies pour gérer la connexion avec le ServerManager
