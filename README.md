@@ -72,7 +72,7 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 Quelques [propriétés](#client-1) sont à personnaliser pour finaliser l'installation.
 	
 	
-## paramètres
+## Paramètres
 
 ### Serveur
 Les propriétés sont définies dans le fichier #ServerManager#/ServerManager.prop
@@ -329,7 +329,7 @@ Pour créer un autre type d'envoi:
 Chemin d'accès à l'application sox pour le mode inter-com.
 
 Installez l'application [sox](http://sourceforge.net/projects/sox/files/sox/14.4.2),
-disponible aussi dans le répertoire #clientManager#/install/sox'.
+disponible aussi dans le répertoire #clientManager#/install'.
 
 Exemple pour un répertoire d'installation C:\\Apps\\sox-14-4-2 : 
 ```text
@@ -340,4 +340,101 @@ Exemple pour un répertoire d'installation C:\\Apps\\sox-14-4-2 :
 
 #### intercom#timeRecord (v:Integer)
 Délais maximal d'enregistrement du message vocale, après ce délais, l'action est intérrompu.
+
+## Commandes client
+Quelques commandes sont définies pour gérer la connexion avec le ServerManager
+
+#### SARAH ferme la connection avec le serveur
+Coupe la connexion avec le ServerManager pour le client.
+
+#### SARAH connecte-toi au serveur
+Etabli une connexion avec le ServerManager pour le client..
+
+Normalement cette connexion est automatique si le client est démarré après le ServerManager mais il peut arriver dans certains cas d'avoir à gérer cette connexion.
+
+#### SARAH intercom (ou "SARAH mode communication")
+Déclenche le mode inter-com avec un autre client.
+
+Vous disposez du délais de la propriété "intercom#timeRecord" pour enregistrer un message afin d'eviter et annuler les faux positifs. 
+Après un silence, l'enregistrement est automatiqument coupé et le message est envoyé.
+
+##### Important:
+Abituez-vous à réduire au maximum le volume du fond sonore lors d'un mode inter-com sinon l'enregistrement ne sera pas arrêté.
+
+Ce message est ensuite envoyé aux clients définis pendant la commande. A savoir:
+- commande sans client: Tous les clients recoivent le message.
+- commande avec un client: le message est envoyé pour ce client uniquement, exemple:
+	- SARAH intercom avec la chambre
+
+Retrouvez et modifiez à votre convenance les commandes dans le fichier clientManager.xml du plugin.
+
+
+## Développement
+Les développements sont à réaliser dans le répertoire plugins du ServerManager.
+
+Le développement d'un plugin est identique au développement d'un plugin pour SARAH. Ils sont automatiquement chargés lors de l'initialisation de ServerManager et rechargés lors d'une modification.
+
+2 fonctions principales sont à définir:
+- exports.init
+	- Exécutée à l'initialisation du plugin 
+- exports.action
+	- Recoit les actions à exécuter.
+
+#### exports.init
+```javascript
+exports.init = function(app, logger){
+	// exécuté à l'initialisation du plugin
+}
+```
+
+app:  Objet global de l'application ServerManager
+logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
+
+Déclaré à l'initialisation du module [winston](https://github.com/winstonjs/winston).
+
+3 niveaux de log sont possibles:
+- logger.info : Pour afficher un message d'information
+- logger.error : Pour afficher un message d'erreur
+- logger.warn : Pour afficher un message de warning
+
+
+#### exports.action
+```javascript
+exports.action = function (data, logger, app) {
+	
+	// exécute les actions par requète HTTP
+	
+}	
+```
+data: objet HTTP pour l'action
+app:  Objet global de l'application ServerManager
+logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
+
+### Fonction utile
+```javascript
+var clients = app.Socket.getClients();
+```
+Retourne un tableaux des clients connectés au multi-room où:
+- id: Le nom du client
+- server_ip: L'adresse IP du server SARAH du client
+- server_port: Le port HTTP du server SARAH du client
+- client_ip: L'adresse IP du client SARAH du client
+- loopback: Le port HTTP du client SARAH du client
+- Obj: L'objet socket du client ouvert pour la communication avec le ServerManager
+
+### Exemples de développement
+2 exemples de plugins sont dans le répertoire plugins de ServerManager:
+- speakTo.js : Pour envoyer un tts vers le(s) client(s) de votre choix.
+- tvSchedule.js: 
+	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences (et une box domotique) qui va envoyer la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit diffusé vers tous les clients automatiquement. Reste plus qu'au plugin SARAH concerné de lire ce fichier et executer ou ignorer l'action.
+	
+### Requête HTTP
+Format:
+- http://<IP adress ServerManager>:<Port>/SM/<plugin>?<param1=valeur>&<param2=valeur>
+
+Exemple:
+- http://192.168.1.67:3000/SM/tvSchedule?command=setConfig&room=Salon
+
+
+
 
