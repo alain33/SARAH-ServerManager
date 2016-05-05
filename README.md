@@ -2,10 +2,11 @@ Multi-room Server Manager
 =========================
 
 ## Pourquoi ?
-- Pour que chaque Sarah installée (client et serveur) dans un multi-room soit vue comme un client unique d'un système global.
-- Pour que chaque client Sarah puisse communiquer et partager des informations avec les autres clients.
-- Pour avoir un système multi-room toujours opérationnel (e.g. un client que ne fonctionne plus dû à un plantage system/harware d'un client).
-- Pour supprimer les latences réseaux dû au montage de répertoires (e.g. plugins).
+- Pour que chaque Sarah dans le multi-room soit vu comme un client d'un système global.
+- Pour avoir un système multi-room toujours opérationnel même en cas de plantage d'un client.
+- Pour supprimer les latences réseaux dû au montage de répertoires.
+- Pour populer les informations (plugins, mise à jour, etc...) sans se connecter sur chaque système.
+- Pour que tous les clients soient synchronisés, puissent communiquer et partager des informations avec les autres clients.		
 		
 ## Comment ?
 - L'application est en 2 parties:
@@ -13,18 +14,18 @@ Multi-room Server Manager
 	- Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le ServerManager.
 - Communication synchrone entre le ServerManager et tous les clientManager.
 - Gestion des fichiers:
-	- Création/Modification/Suppression d'un fichier/répertoire:
-		- Sur le ServerManager sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyé lors de sa prochaine connexion.
-		- Sur un client sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour sur tous les autres clients.
+	- Création, Modification, Suppression d'un fichier ou d'un répertoire:
+		- Sur le ServerManager: sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyée lors de sa prochaine connexion.
+		- Sur un client: sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour sur tous les autres clients.
 - Gestion des versions de fichiers:
-	- Permet de gérer pour chaque client une version différente de fichier.
-	- Chaque client peut avoir des plugins, des xml, des js, des fichiers de propriétés différents.
-- Gestion de requètes HTTP:
-	- Le ServerManager recoit et centralise des requètes HTTP (e.g. provenant d'une box domotique) qui sont envoyés automatiquement vers tous les clients ou un client dédié.
+	- Permet de gérer une version différente de fichier en fonction de chaque client.
+	- Chaque client peut donc avoir des plugins, des xml, des js et des fichiers de propriétés différents.
+- Gestion de requêtes HTTP:
+	- Le ServerManager peut recevoir et centraliser des requètes HTTP qui sont envoyés automatiquement vers tous les clients ou un client dédié.
 - Gestion de l'application des modifications:
-	- Si necessaire, redémarrage automatique du serveur et/ou du client de chaque client Sarah pour enregistrer des modifications de fichiers en fonction du type (js,xml,prop,etc...).
+	- Si nécessaire, redémarrage automatique du serveur et/ou du client de chaque client Sarah pour enregistrer des modifications de fichiers en fonction du type (js,xml,prop,etc...).
 - Alerte de déconnexion:
-	- Un message d'alerte est envoyé lorsqu'un client ou le ServerManager se déconnecte afin d'avertir des problèmes système/hardware sur un composant du multi-room.
+	- Un message d'alerte est envoyé lorsqu'un client ou le ServerManager se déconnecte afin d'avertir d'un problème sur un composant du multi-room.
 - Mode inter-comm:
 	- Permet d'envoyer un message vocale depuis un client vers un autre client ou tous les clients via le ServerManager.
 - Evolutif:
@@ -37,15 +38,17 @@ Multi-room Server Manager
 ## Installation
 
 ### Serveur
+
 - Installez [nodejs](https://nodejs.org/en) sur la plateforme où sera installé ServerManager.
-	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installation de votre choix.
+	- Sélectionnez un répertoire d'installation de votre choix.
 - Créez un répertoire parent pour ServerManager, par exemple c:/Apps/multi-room.	
 	- Important: N'utilisez pas de caractères d'espacements dans le nom du répertoire.
 - Téléchargez et dézippez le fichier 'SARAH-ServerManager-master.zip' dans le répertoire créé.
+	- Supprimer le dernier répertoire du chemin proposé pour ne pas avoir de doublon de répertoire.
 - Renommez le répertoire créé en 'ServerManager'.
 - Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire ServerManager.
 - Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
-- Attendez quelques secondes pendant l'installation des modules npm nécessaires à l'application.
+- Attendez quelques secondes pendant l'installation d'un module npm nécessaire à l'application.
 
 ##### Test d'installation
 Localisez et double-cliquez sur le fichier de lancement 'ServerManager.bat'.
@@ -55,15 +58,16 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 
 
 ###  Client
-- Du fait de la version non compatible de nodejs sur les versions courantes de Sarah, installez [nodejs](https://nodejs.org/en) sur la plateforme du client Sarah de votre multi-room.
-	- Acceptez le répertoire par défaut où sélectionnez un répertoire d'installation de votre choix en dehors de Sarah.
+- Du fait des versions anciennes de nodejs sur les versions courantes de Sarah, installez [nodejs](https://nodejs.org/en) sur la plateforme du client Sarah de votre multi-room.
+	- Sélectionnez un répertoire d'installation de votre choix en dehors des répertoires de Sarah.
 - Récupérez le #ServerManager#/client_install/clientManager.zip et copiez-le dans le répertoire SARAH/plugins du client Sarah de votre multi-room.
 - Dézippez le fichier.
+	- Supprimer le dernier répertoire du chemin proposé pour ne pas avoir de doublon de répertoire.
 - Supprimez le fichier SARAH/plugins/clientManager.zip après l'extraction.
 - Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire SARAH/plugins/clientManager.	
 - Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
-- Attendez quelques secondes pendant l'installation des modules npm nécessaires à l'application.
-- Répetez l'opération pour tous les Sarah de votre multi-room.
+- Attendez quelques secondes pendant l'installation du module npm nécessaire à l'application.
+- Répetez ensuite l'opération pour tous les Sarah de votre multi-room.
 
 Quelques [propriétés](#client-1) sont à personnaliser pour finaliser l'installation.
 	
@@ -80,28 +84,38 @@ Port HTTP pour la communication entre le ServerManager et les Sarah clientManage
 Adresse réseau du serveur.
 
 #### root#folders (v:String)
-Répertoires synchronisés par le ServerManager. Toutes les modifications faites dans les fichiers/répertoires de ces répertoires seront automatiquement reproduites sur les clients.
+Répertoires synchronisés par le ServerManager. 
+Toutes les modifications faites dans les fichiers/sous-répertoires de ces répertoires seront automatiquement reproduites sur les clients.
+
+Par exemple, le répertoire plugins peut être synchronisé pour que toutes les modifications apportées sur ce répertoire soient mises à jour sur chacun des clients:
+- Ajout, suppression d'un plugin.
+- Mise à jour d'un fichier dans un plugin.
+- Fichier(s) devant être synchrone(s) dans tous les clients.
+- etc...
+
 ##### Important:
-- Ces répertoires doivent être dans le même file system que l'application ServerManager.
+- Ces répertoires doivent être dans le même file système que l'application ServerManager.
 - Les chemins doivent être absolus et au format Unix (un slash ('/') en début de chemin).
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
 - Les chemins sont séparés par des points-virgules (';').
 
-Exemple pour 2 répertoires 'c:\Apps\working\plugins' et 'c:\Apps\working\script' :
+Exemple pour 2 répertoires à synchroniser 'c:\Apps\working\plugins' et 'c:\Apps\working\macros' :
 ```text
 "root" : {
-		"folders"  : "/Apps/working/plugins;/Apps/working/script",	
+		"folders"  : "/Apps/working/plugins;/Apps/working/macros",	
 		....
 ```
 
 #### root#ignored (v:String)
 Fichiers non synchronisés par le ServerManager dans les répertoires définis dans le paramètre root.folders.
 
-Format :
-- Chemin en absolu pour définir un fichier spécifique.
-- Chemin en relatif pour définir une extention de fichier à ignorer globalement. 
+Format, soit :
+- Un chemin en absolu pour définir un fichier spécifique à ignorer.
+- Une extention de fichier à ignorer globalement. 
 
 ##### Important:
 - Les chemins en absolus doivent être au format Unix (un slash ('/') en début de chemin).
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
 - Les Fichiers sont séparés par des points-virgules (';').
 
 Exemple pour 'c:\Apps\working\plugins\tvSchedule\portlet.html' et un type de fichier 'css' à ignorer :
@@ -121,17 +135,19 @@ Par défaut, 2 types sont possibles:
 
 Le type défini dans cette propriété est le nom du fichier js associé dans le répertoire #ServerManager#/notify qui envoie la notification. Par exemple, 'pushover' est le nom du fichier js 'pushover.js' dans le répertoire.
 
-2 paramètres  d'identification associés sont définis par défaut:
+2 paramêtres  d'identification associés sont définis par défaut:
 - "pushoverUser" et "pushoverToken" pour pushover.
 - "SMSuser" et "SMStoken" pour free SMS.
 
 Pour créer un autre type d'envoi:
 - Copiez 1 des 2 fichiers js du répertoire #ServerManager#/notify avec le nom que vous voulez et modifiez-le pour votre type d'envoi.
-- Utilisez les paramètres d'identification par défaut où ajoutez les votres.
+- Utilisez les paramètres d'identification par défaut où ajoutez les votres dans le #ServerManager#/ServerManager.prop.
+- Changer la valeur de la propriété 'sendType' par le nom de votre fichier js.
 - Aucune autre modification n'est requise, le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
 	
+	
 ### Client
-Les propriétés sont définies dans le fichier clientManager.prop du plugin.
+Les propriétés sont définies dans le fichier clientManager.prop du plugin clientManager.
 
 #### client (v:String)
 Le nom du client dans le multi-room.
@@ -149,7 +165,7 @@ Adresse réseau du client micro Sarah.
 Adresse réseau du serveur Sarah.
 
 #### http#serverManager#port (v:Integer)
-Port HTTP pour la communication entre le ServerManager et les Sarah clientManager. Doit être le même que défini dans la propriété http#port du ServerManager.prop
+Port HTTP pour la communication entre le ServerManager et le clientManager. Doit être le même que défini dans la propriété http#port du ServerManager.prop
 
 #### http#serverManager#ip (v:String)
 Adresse réseau du ServerManager. Doit être le même que défini dans la propriété http#ip du ServerManager.prop
@@ -157,9 +173,15 @@ Adresse réseau du ServerManager. Doit être le même que défini dans la propri
 #### root#watch (v:String)
 Fichiers synchronisés par le clientManager. Toutes les modifications/suppressions faites sur ces fichiers seront automatiquement reproduites sur le ServerManager.
 
+Tous les fichiers de tous les répertoires de Sarah peuvent être synchronisés. 
+Bien sûr, pour que le ServerManager tienne compte de la synchronisation, le répertoire principal parent du fichier doit être défini aussi dans le ServerManager.prop, 
+par exemple pour un fichier d'un plugin, le répertoire principal parent est "plugins".
+"plugins" doit donc être un répertoire défini dans la propriété root#folders du ServerManager.
+
 ##### Important:
 - Le clientManager ne synchronise que des fichiers, ne pas mettre de répertoires.
 - Les chemins des fichiers doivent être en relatif à partir du répertoire principal de Sarah et au format Unix (un slash ('/') en début de chemin).
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
 - Les fichiers sont séparés par des points-virgules (';').
 
 Exemple pour 2 fichiers 'SARAH/plugins/scenariz/lib/db/ScenariznoCron.db' et 'SARAH/plugins/tvSchedule/lib/db/tvSchedule.db' :
@@ -171,11 +193,14 @@ Exemple pour 2 fichiers 'SARAH/plugins/scenariz/lib/db/ScenariznoCron.db' et 'SA
 
 #### root#deleteIgnored (v:String)
 Fichiers ignorés par la synchronisation lors de leurs suppressions. 
-Utile par exemple pour les fichiers de bases nedb qui sont d'abord supprimés puis ensuite recréés lors de leurs modification, ce qui posent quelques problèmes de synchronisation. 
+Utile par exemple pour des fichiers qui peuvent poser quelques problèmes de synchronisation lors de leurs modifications,
+comme par exemple les fichiers de base nedb qui sont supprimés avant d'être modifiés ou
+certains fichiers qui ne necessitent pas de synchronisation lors de leurs suppressions. 
 
 ##### Important:
 - Le clientManager ne synchronise que des fichiers, ne pas mettre de répertoires.
 - Les chemins des fichiers doivent être en relatif à partir du répertoire principal de SARAH et au format Unix (un slash ('/') en début de chemin).
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
 - Les fichiers sont séparés par des points-virgules (';').
 
 
@@ -188,10 +213,12 @@ Exemple pour 2 fichiers 'SARAH/plugins/scenariz/lib/db/ScenariznoCron.db' et 'SA
 ```
 
 #### root#folders (v:String)
-Répertoires à scanner lors de l'initialisation du plugin. Si un fichier inclut dans ces répertoires n'est pas identique à celui du ServerManager, il est mis à jour automatiquement.
+Répertoires à scanner lors de l'initialisation du plugin. 
+Si un fichier inclut dans ces répertoires n'est pas identique à celui du repertoire synchronisé du ServerManager, il est mis à jour automatiquement.
 
 ##### Important:
 - Les répertoires doivent être en relatif à partir du répertoire principal de SARAH.
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
 - Normalement, les répertoires définis ici sont identiques aux répertoires définis dans la propriétés root#folders du fichier ServerManager.prop (mais en relatif).
  
 Exemple pour 2 répertoires 'SARAH/plugins' et 'SARAH/macros'(SARAH V3) :
@@ -202,6 +229,115 @@ Exemple pour 2 répertoires 'SARAH/plugins' et 'SARAH/macros'(SARAH V3) :
 		....
 ```
  
+#### interval#watch (v:Integer)
+Interval de temps en ms avant d'envoyer l'action si un fichier synchronisé est modifié ou supprimé. 
+Ne modifiez pas cette valeur.
+
+#### interval#stream (v:Integer)
+Interval de temps en ms avant de réactiver la synchronisation d'un fichier après sa copie si il a été modifié ou supprimé.
+Ne modifiez pas cette valeur.
+
+#### restart#server (v:String)
+Fichiers et types de fichiers qui necessitent un redémarrage du serveur SARAH.
+
+Des caractères de remplacements peuvent être définis dans les chemins ou les noms de fichiers.
+
+##### Important:
+- Les répertoires doivent être en relatif à partir du répertoire principal de SARAH.
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
+ 
+Exemple pour que tous les fichiers js de tous les plugins fassent redémarrer le serveur si ils sont modifiés:
+```text
+"restart" : {
+	"server": "plugins/*/*.js",
+	....
+```
+
+Exemple pour que tous les fichiers js des sous-répertoires 'lib' fassent redémarrer le serveur si ils sont modifiés:
+```text
+"restart" : {
+	"server": "plugins/*/lib/*/*.js",
+	....
+```
 
 
+#### restart#client (v:String)
+Fichiers et types de fichiers qui necessitent un redémarrage du client SARAH.
+
+Des caractères de remplacements peuvent être définis dans les chemins ou les noms de fichiers.
+Fonctionne aussi en précisant des noms de répertoires ou de fichiers complets.
+
+##### Important:
+- Les répertoires doivent être en relatifs à partir du répertoire principal de SARAH.
+- Les noms sont case-sensitives donc faites attention aux majuscules, minuscules.
+ 
+Exemple pour que tous les fichiers .prop de tous les plugins fassent redémarrer le client si ils sont modifiés:
+```text
+"restart" : {
+	"client": "plugins/*/*.prop",
+	....
+```
+
+#### restart#stopGracefully (v:Boolean)
+Ferme le client micro SARAH par l'icône de tâche du menu démarrer.
+
+#### restart#timeBeforeKill (v:Integer)
+Délais en ms pour tuer le process si le client micro SARAH ne s'est pas fermé correctement. 
+
+#### restart#useKinect (v:Boolean)
+Si une Kinect est utilisée (SARAH V3 uniquement).
+
+#### restart#useKinectAudio (v:Boolean)
+Si l'audio Kinect est utilisé (SARAH V3 uniquement).
+
+#### restart#waitForClient (v:Integer)
+Délais d'attente en ms pour démarrer le serveur SARAH après le démarrage du client micro.
+
+#### restart#minimizeClient (v:Boolean)
+Pour minimiser le client (non utilisé).
+
+#### restart#hideClient (v:Boolean)
+Pour cacher l'icône de tâche du client dans le menu démarrer.
+
+#### restart#minimizeServer (v:Boolean)
+Pour minimiser la fenêtre du serveur.
+
+#### restart#hideServer (v:Boolean)
+Pour cacher la fenêtre du server.
+
+#### notification#sendType (v:String)
+Type de notification lors d'une déconnexion du ServerManager.
+
+Par défaut, 2 types sont possibles:
+- pushover
+- free
+
+Le type défini dans cette propriété est le nom du fichier js associé dans le répertoire #clientManager#/manager qui envoie la notification. Par exemple, 'pushover' est le nom du fichier js 'pushover.js' dans le répertoire.
+
+2 paramêtres  d'identification associés sont définis par défaut:
+- "pushoverUser" et "pushoverToken" pour pushover.
+- "SMSuser" et "SMStoken" pour free SMS.
+
+Pour créer un autre type d'envoi:
+- Copiez 1 des 2 fichiers js du répertoire #clientManager#/manager avec le nom que vous voulez et modifiez-le pour votre type d'envoi.
+- Utilisez les paramètres d'identification par défaut où ajoutez les votres dans le #clientManager#/clientManager.prop.
+- Changer la valeur de la propriété 'sendType' par le nom de votre fichier js.
+- Aucune autre modification n'est requise, le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
+	
+	
+#### intercom#sox (v:String)	
+Chemin d'accès à l'application sox pour le mode inter-com.
+
+Installez l'application [sox](http://sourceforge.net/projects/sox/files/sox/14.4.2),
+disponible aussi dans le répertoire #clientManager#/install/sox'.
+
+Exemple pour un répertoire d'installation C:\\Apps\\sox-14-4-2 : 
+```text
+	"intercom" : {
+		"sox" : "C:\\Apps\\sox-14-4-2",
+		.....
+```
+
+#### intercom#timeRecord (v:Integer)
+Délais maximal d'enregistrement du message vocale, après ce délais, l'action est intérrompu.
 
