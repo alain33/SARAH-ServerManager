@@ -348,7 +348,7 @@ Quelques commandes sont définies pour gérer la connexion avec le ServerManager
 Coupe la connexion avec le ServerManager pour le client.
 
 #### SARAH connecte-toi au serveur
-Etabli une connexion avec le ServerManager pour le client..
+Etabli une connexion avec le ServerManager pour le client.
 
 Normalement cette connexion est automatique si le client est démarré après le ServerManager mais il peut arriver dans certains cas d'avoir à gérer cette connexion.
 
@@ -359,7 +359,7 @@ Vous disposez du délais de la propriété "intercom#timeRecord" pour enregistre
 Après un silence, l'enregistrement est automatiqument coupé et le message est envoyé.
 
 ##### Important:
-Abituez-vous à réduire au maximum le volume du fond sonore lors d'un mode inter-com sinon l'enregistrement ne sera pas arrêté.
+Habituez-vous à réduire au maximum le volume du fond sonore lors d'un mode inter-com sinon l'enregistrement ne sera pas arrêté.
 
 Ce message est ensuite envoyé aux clients définis pendant la commande. A savoir:
 - commande sans client: Tous les clients recoivent le message.
@@ -387,8 +387,8 @@ exports.init = function(app, logger){
 }
 ```
 
-app:  Objet global de l'application ServerManager
-logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
+- app:  Objet global de l'application ServerManager
+- logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
 
 Déclaré à l'initialisation du module [winston](https://github.com/winstonjs/winston).
 
@@ -406,21 +406,21 @@ exports.action = function (data, logger, app) {
 	
 }	
 ```
-data: objet HTTP pour l'action
-app:  Objet global de l'application ServerManager
-logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
+- data: objet HTTP pour l'action
+- app:  Objet global de l'application ServerManager
+- logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
 
 ### Fonction utile
 ```javascript
 var clients = app.Socket.getClients();
 ```
-Retourne un tableaux des clients connectés au multi-room où:
+Retourne un tableau des clients connectés au multi-room où:
 - id: Le nom du client
 - server_ip: L'adresse IP du server SARAH du client
 - server_port: Le port HTTP du server SARAH du client
 - client_ip: L'adresse IP du client SARAH du client
 - loopback: Le port HTTP du client SARAH du client
-- Obj: L'objet socket du client ouvert pour la communication avec le ServerManager
+- Obj: L'objet socket ouvert pour la communication entre le client et le ServerManager
 
 ### Exemples de développement
 2 exemples de plugins sont dans le répertoire plugins de ServerManager:
@@ -430,7 +430,7 @@ Retourne un tableaux des clients connectés au multi-room où:
 	
 ### Requête HTTP
 Format:
-- http://<IP adress ServerManager>:<Port>/SM/<plugin>?<param1=valeur>&<param2=valeur>
+- http://IP adress ServerManager:Port/SM/plugin?param1=valeur&param2=valeur
 
 Exemple:
 - http://192.168.1.67:3000/SM/tvSchedule?command=setConfig&room=Salon
