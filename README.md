@@ -404,13 +404,10 @@ plugins
 ```
 
 ##### Autre exemple:
-Supposons qu'on veuille un répertoire plugins/monplugin uniquement que pour le client Salon (rien pour le client Chambre):
+Supposons qu'on veuille un répertoire plugins/monplugin uniquement que pour le client Salon (Aucun autre fichier dans le répertoire d'origine du plugin sinon ils seront copiés dans les autres clients):
 ```text
 plugins
 	monplugin
-		fichier1.xxx
-		fichier2.xxx
-		....
 		clients
 			Salon
 				monfichier1
