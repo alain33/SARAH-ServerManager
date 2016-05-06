@@ -367,7 +367,7 @@ Pour synchroniser des fichiers différents pour chaque client, créez un répert
 Lorsqu'un répertoire 'clients' est créé, seuls les clients qui ont un répertoire de leur nom dessous auront ces fichiers synchronisés, les autres clients seront ignorés.
 
 ##### Par exemple:
-Dans le répertoire synchronisé 'plugins' (voir la propriété [root#folders]((#rootfolders-vstring)
+Dans le répertoire synchronisé 'plugins' (voir la propriété [root#folders](#rootfolders-vstring))
 
 Supposons qu'on veuille un fichier plugins/monplugin/monplugin.prop pour le client Salon et un autre différent pour le client Chambre:
 
