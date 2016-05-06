@@ -362,9 +362,9 @@ Délais maximal d'enregistrement du message vocale, après ce délais, l'action 
 
 Par défaut, un fichier placé directement dans son répertoire est synchronisé avec tous les clients.
 
-Pour synchroniser des fichiers différents pour chaque client, créez un répertoire 'clients' dans le répertoire des fichiers, puis dessous créez des répertoires du nom des clients en y plaçant leurs versions de fichiers.
-
-Lorsqu'un répertoire 'clients' est créé, seuls les clients qui ont un répertoire de leur nom dessous auront ces fichiers synchronisés, les autres clients seront ignorés.
+Pour synchroniser des fichiers différents pour chaque client, créez un répertoire 'clients' dans le répertoire des fichiers puis créez des répertoires dessous du nom des clients en y plaçant leurs versions de fichiers.
+##### Attention:
+Lorsqu'un répertoire 'clients' est créé, les fichiers du même nom placés dans le répertoires d'origine sont ignorés. 
 
 ##### Par exemple:
 Dans le répertoire synchronisé 'plugins' (voir la propriété [root#folders](#rootfolders-vstring))
@@ -374,6 +374,9 @@ Supposons qu'on veuille un fichier plugins/monplugin/monplugin.prop pour le clie
 ```text
 plugins
 	monplugin
+		fichier1.xxx
+		fichier2.xxx
+		....
 		clients
 			Salon
 				monplugin.prop
@@ -386,6 +389,9 @@ Supposons qu'on veuille un répertoire plugins/monplugin/sousrepertoire avec des
 ```text
 plugins
 	monplugin
+		fichier1.xxx
+		fichier2.xxx
+		....
 		clients
 			Salon
 				sousrepertoire
@@ -403,6 +409,9 @@ Supposons qu'on ne veuille qu'un répertoire plugins/monplugin que pour le clien
 ```text
 plugins
 	monplugin
+		fichier1.xxx
+		fichier2.xxx
+		....
 		clients
 			Salon
 				monfichier1
