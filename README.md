@@ -370,7 +370,6 @@ Lorsqu'un répertoire 'clients' est créé, les fichiers du même nom placés da
 Dans le répertoire synchronisé 'plugins' (voir la propriété [root#folders](#rootfolders-vstring))
 
 Supposons qu'on veuille un fichier plugins/monplugin/monplugin.prop pour le client Salon et un autre différent pour le client Chambre:
-
 ```text
 plugins
 	monplugin
@@ -405,7 +404,7 @@ plugins
 ```
 
 ##### Autre exemple:
-Supposons qu'on ne veuille qu'un répertoire plugins/monplugin que pour le client Salon uniquement (rien pour le client Chambre):
+Supposons qu'on veuille un répertoire plugins/monplugin uniquement que pour le client Salon (rien pour le client Chambre):
 ```text
 plugins
 	monplugin
@@ -420,7 +419,7 @@ plugins
 ```
 
 ##### Pour information:
-Il est préférable de créer une arborescence de répertoires et fichiers avant de connecter les clients au ServerManager afin éviter une synchronisation sur un trop grand nombre d'évenements simultanés sur ces fichiers (création, modification, renommage, suppression, etc...).
+Il est préférable de créer une arborescence de répertoires et fichiers avant de connecter les clients au ServerManager afin éviter une synchronisation sur un trop grand nombre d'évenements système simultanément sur ces fichiers (création, modification, renommage, suppression, etc...).
 
 
 ## Commandes client
