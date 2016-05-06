@@ -495,7 +495,7 @@ exports.action = function (data, logger, app) {
 ```javascript
 var clients = app.Socket.getClients();
 ```
-Retourne un tableau des clients connectés au multi-room où:
+Retourne un tableau des clients connectés au multi-room où pour chaque objet 'client':
 - id: Le nom du client
 - server_ip: L'adresse IP du server SARAH du client
 - server_port: Le port HTTP du server SARAH du client
@@ -513,7 +513,7 @@ Retourne un tableau des [propriétés](#serveur-1) de ServerManager
 2 exemples de plugins sont dans le répertoire plugins de ServerManager:
 - speakTo.js : Pour envoyer un tts vers le(s) client(s) de votre choix.
 - tvSchedule.js: 
-	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences (et une box domotique) qui va envoyer la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit diffusé vers tous les clients automatiquement. Reste plus qu'aux plugins SARAH concernés de lire ce fichier et executer ou ignorer l'action.
+	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences (et une box domotique) qui va envoyer la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit diffusé vers tous les clients automatiquement. Ne reste plus qu'au plugin SARAH concerné de lire ce fichier et executer ou ignorer l'action.
 	
 ### Requête HTTP
 Format:
