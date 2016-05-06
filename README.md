@@ -37,7 +37,7 @@ Multi-room Server Manager
 - [Installation](#installation)		
 	- [Serveur](#serveur)
 	- [Client](#client)
-- [Paramètres](#paramètres)
+- [Propriétés](#propriétés)
 	- [Serveur](#serveur-1)
 	- [Client](#client-1)
 - [Gestion de la version des fichiers](#gestion-de-la-version-des-fichiers)	
@@ -88,7 +88,7 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 Quelques [propriétés](#client-1) sont à personnaliser pour finaliser l'installation.
 	
 	
-## Paramètres
+## Propriétés
 
 ### Serveur
 Les propriétés sont définies dans le fichier #ServerManager#/ServerManager.prop
@@ -360,8 +360,58 @@ Délais maximal d'enregistrement du message vocale, après ce délais, l'action 
 
 ## Gestion de la version des fichiers
 
-Under construction...
+Par défaut, un fichier placé directement dans son répertoire est synchronisé avec tous les clients.
 
+Pour synchroniser des fichiers différents pour chaque client, créez un répertoire 'clients' dans le répertoire des fichiers, puis dessous créez des répertoires du nom des clients en y plaçant leurs versions de fichiers.
+
+Lorsqu'un répertoire 'clients' est créé, seuls les clients qui ont un répertoire de leur nom dessous auront ces fichiers synchronisés, les autres clients seront ignorés.
+
+##### Par exemple:
+Dans le répertoire synchronisé 'plugins' (voir la propriété [root#folders]((#rootfolders-vstring)
+
+Supposons qu'on veuille un fichier plugins/monplugin/monplugin.prop pour le client Salon et un autre différent pour le client Chambre:
+
+```text
+plugins
+	monplugin
+		clients
+			Salon
+				monplugin.prop
+			Chambre
+				monplugin.prop
+```
+
+##### Autre exemple:
+Supposons qu'on veuille un répertoire plugins/monplugin/sousrepertoire avec des contenus différents pour le client Salon et le client Chambre:
+```text
+plugins
+	monplugin
+		clients
+			Salon
+				sousrepertoire
+					monfichier1
+					monfichier2
+					...
+			Chambre
+				sousrepertoire
+					monautrefichier1
+					...
+```
+
+##### Autre exemple:
+Supposons qu'on ne veuille qu'un répertoire plugins/monplugin que pour le client Salon uniquement (rien pour le client Chambre):
+```text
+plugins
+	monplugin
+		clients
+			Salon
+				monfichier1
+				monfichier2
+				...
+```
+
+##### Pour information:
+Il est préférable de créer une arborescence de répertoires et fichiers avant de connecter les clients au ServerManager afin éviter une synchronisation sur un trop grand nombre d'évenements simultanés sur ces fichiers (création, modification, renommage, suppression, etc...).
 
 
 ## Commandes client
@@ -374,6 +424,9 @@ Coupe la connexion avec le ServerManager pour le client.
 Etabli une connexion avec le ServerManager pour le client.
 
 Normalement cette connexion est automatique si le client est démarré après le ServerManager mais il peut arriver dans certains cas d'avoir à gérer cette connexion.
+
+#### SARAH tu es connectée au serveur ?
+Retourne l'état de connexion avec le ServerManager.
 
 #### SARAH intercom (ou "SARAH mode communication")
 Déclenche le mode inter-com avec un autre client.

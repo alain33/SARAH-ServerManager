@@ -134,7 +134,10 @@ var sendnotif = function (client) {
 var change = function (data, srvDir) {
 	
 	_.map(clients, function(num) {
-		if (changedFrom && num.id != changedFrom) 
+		if (changedFrom) {
+			if (num.id != changedFrom) 
+				num.Obj.emit('receive_data', data, srvDir);
+		} else
 			num.Obj.emit('receive_data', data, srvDir);
 	});
 	
@@ -145,7 +148,10 @@ var change = function (data, srvDir) {
 var remove = function (data, srvDir) {
 	
 	_.map(clients, function(num) {
-		if (changedFrom && num.id != changedFrom)
+		if (changedFrom) {
+			if (num.id != changedFrom) 
+				num.Obj.emit('remove_data', data, srvDir);
+		} else
 			num.Obj.emit('remove_data', data, srvDir);
 	});
 	

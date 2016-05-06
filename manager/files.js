@@ -99,15 +99,15 @@ var doevent = function (event, type, data) {
 		app.Socket.change(items,folders[0]);
 		break;
 	case 'unlink':
-		// remove Dir/file
+		// remove file
 		logger.info('Delete %s on clients', items[0].name);
 		app.Socket.remove(items,folders[0]);
 		break;
-	case 'unlinkDir':
-		// remove Dir/file
+	 case 'unlinkDir':
+		// remove Dir
 		logger.info('Delete %s on clients', items[0].name);
 		app.Socket.remove(items,folders[0]);
-		break;
+		break; 
 	}
 	
 }
