@@ -1,6 +1,11 @@
 Multi-room Server Manager
 =========================
 
+This plugin is an add-on for the framework [S.A.R.A.H.](http://encausse.net/s-a-r-a-h), an Home Automation project built 
+on top of:
+* C# (Kinect) client for Voice, Gesture, Face, QRCode recognition. 
+* NodeJS (ExpressJS) server for Internet of Things communication
+
 ## Pourquoi ?
 - Pour que chaque Sarah dans le multi-room soit vu comme un client d'un système global.
 - Pour avoir un système multi-room toujours opérationnel même en cas de plantage d'un client.
@@ -17,7 +22,7 @@ Multi-room Server Manager
 - Gestion des fichiers:
 	- Création, Modification, Suppression d'un fichier ou d'un répertoire:
 		- Sur le ServerManager: sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyée lors de sa prochaine connexion.
-		- Sur un client: sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour sur tous les autres clients.
+		- Sur un client: sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour vers tous les autres clients.
 - Gestion des versions de fichiers:
 	- Permet de gérer une version différente de fichier en fonction de chaque client.
 	- Chaque client peut donc avoir des plugins, des xml, des js et des fichiers de propriétés différents.
@@ -46,6 +51,7 @@ Multi-room Server Manager
 	- [API](#api)
 	- [Exemples](#exemples-de-développement)
 	- [Requête HTTP](#requête-http)
+	- [Versions](#versions)
 
 ## Compatibilité
 - Le ServerManager peut être installé sur Windows ou Unix.
@@ -523,3 +529,9 @@ Format:
 
 Exemple:
 - http://192.168.1.67:3000/SM/tvSchedule?command=setConfig&room=Salon
+
+
+Versions
+--------
+1.0
+- Première version
