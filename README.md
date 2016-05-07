@@ -303,31 +303,47 @@ Exemple pour que tous les fichiers .prop de tous les plugins fassent redémarrer
 ```
 
 #### restart#stopGracefully (v:Boolean)
-Ferme le client micro SARAH par l'icône de tâche du menu démarrer.
+Ferme le client micro SARAH par l'icône de tâche du menu démarrer lors d'un redémarrage.
 
 #### restart#timeBeforeKill (v:Integer)
-Délais en ms pour tuer le process si le client micro SARAH ne s'est pas fermé correctement. 
+Délais en ms pour tuer le process si le client micro SARAH ne s'est pas fermé correctement lors d'un redémarrage. 
 
 #### restart#useKinect (v:Boolean)
 Si une Kinect est utilisée (SARAH V3 uniquement).
+```text
+"restart" : {
+	....
+	"useKinect": true,
+	ou
+	"useKinect": false,
+	....
+```
 
 #### restart#useKinectAudio (v:Boolean)
 Si l'audio Kinect est utilisé (SARAH V3 uniquement).
+```text
+"restart" : {
+	....
+	"useKinectAudio": true,
+	ou
+	"useKinectAudio": false,
+	....
+```
 
 #### restart#waitForClient (v:Integer)
 Délais d'attente en ms pour démarrer le serveur SARAH après le démarrage du client micro.
 
 #### restart#minimizeClient (v:Boolean)
-Pour minimiser le client (non utilisé).
+Pour minimiser le client lors d'un redémarrage (non utilisé).
 
 #### restart#hideClient (v:Boolean)
-Pour cacher l'icône de tâche du client dans le menu démarrer.
+Pour cacher l'icône de tâche du client dans le menu démarrer lors d'un redémarrage.
 
 #### restart#minimizeServer (v:Boolean)
-Pour minimiser la fenêtre du serveur.
+Pour minimiser la fenêtre du serveur lors d'un redémarrage.
 
 #### restart#hideServer (v:Boolean)
-Pour cacher la fenêtre du serveur.
+Pour cacher la fenêtre du serveur lors d'un redémarrage.
 
 #### notification#sendType (v:String)
 Type de notification lors d'une déconnexion du ServerManager.
