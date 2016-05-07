@@ -56,6 +56,7 @@ Multi-room Server Manager
 ### Serveur
 
 - Installez [nodejs](https://nodejs.org/en) sur la plateforme où sera installé ServerManager.
+	- Le programme d'installation est aussi disponible dans le 'SARAH-ServerManager-master.zip' et sous ServerManager/client_install/nodejs
 	- Sélectionnez un répertoire d'installation de votre choix.
 - Créez un répertoire parent pour ServerManager, par exemple c:/Apps/multi-room.	
 	- Important: N'utilisez pas de caractères d'espacements dans le nom du répertoire.
@@ -75,6 +76,7 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 
 ###  Client
 - Du fait des versions anciennes de nodejs sur les versions courantes de Sarah, installez [nodejs](https://nodejs.org/en) sur la plateforme du client Sarah de votre multi-room.
+	- Le programme d'installation est aussi disponible dans le 'SARAH-ServerManager-master.zip' et sous ServerManager/client_install/nodejs
 	- Sélectionnez un répertoire d'installation de votre choix en dehors des répertoires de Sarah.
 - Récupérez le #ServerManager#/client_install/clientManager.zip et copiez-le dans le répertoire SARAH/plugins du client Sarah de votre multi-room.
 - Dézippez le fichier.
