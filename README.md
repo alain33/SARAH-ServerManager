@@ -63,8 +63,8 @@ Multi-room Server Manager
 - Téléchargez et dézippez le fichier 'SARAH-ServerManager-master.zip' dans le répertoire créé.
 	- Supprimer le dernier répertoire du chemin proposé pour ne pas avoir de doublon de répertoire.
 - Renommez le répertoire créé en 'ServerManager'.
-- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire ServerManager.
-- Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
+- Ouvrez un shell (commande cmd) et déplacez-vous dans le répertoire ServerManager.
+- Entrez la commande: install_npm_modules
 - Attendez quelques secondes pendant l'installation d'un module npm nécessaire à l'application.
 
 ##### Test d'installation
@@ -83,9 +83,10 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 	- Supprimer le dernier répertoire du chemin proposé pour ne pas avoir de doublon de répertoire.
 - Supprimez le fichier SARAH/plugins/clientManager.zip après l'extraction.
 - Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire SARAH/plugins/clientManager.	
-- Localisez et double-cliquez sur le fichier 'install_npm_modules.bat'
+- Ouvrez un shell (commande cmd) et déplacez-vous dans le répertoire clientManager.
+- Entrez la commande: install_npm_modules
 - Attendez quelques secondes pendant l'installation du module npm nécessaire à l'application.
-- Répetez ensuite l'opération pour tous les Sarah de votre multi-room.
+- Répetez ensuite l'opération pour toutes les Sarah de votre multi-room.
 
 Quelques [propriétés](#client-1) sont à personnaliser pour finaliser l'installation.
 	
