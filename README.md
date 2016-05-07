@@ -82,8 +82,7 @@ Quelques [propriétés](#serveur-1) sont à personnaliser pour finaliser l'insta
 - Dézippez le fichier.
 	- Supprimer le dernier répertoire du chemin proposé pour ne pas avoir de doublon de répertoire.
 - Supprimez le fichier SARAH/plugins/clientManager.zip après l'extraction.
-- Ouvrez un gestionnaire de fichiers et déplacez-vous dans le répertoire SARAH/plugins/clientManager.	
-- Ouvrez un shell (commande cmd) et déplacez-vous dans le répertoire clientManager.
+- Ouvrez un shell (commande cmd) et déplacez-vous dans le répertoire SARAH/plugins/clientManager.
 - Entrez la commande: install_npm_modules
 - Attendez quelques secondes pendant l'installation du module npm nécessaire à l'application.
 - Répetez ensuite l'opération pour toutes les Sarah de votre multi-room.
