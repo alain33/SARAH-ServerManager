@@ -418,7 +418,7 @@ plugins
 ```
 
 ##### Pour information:
-Il est préférable de créer une arborescence de répertoires et fichiers avant de connecter les clients au ServerManager afin d'éviter une synchronisation sur un trop grand nombre d'évenements systèmes simultanément sur ces fichiers (création, modification, renommage, suppression, etc...).
+Il est préférable de créer une arborescence de répertoires et fichiers avant de connecter les clients au ServerManager afin d'éviter une synchronisation sur un trop grand nombre d'évenements systèmes simultanément sur ces fichiers (création, modification, renommage, suppression, etc...) ou de réaliser cette arborescence en dehors des répertoires synchronisés puis de la copier ensuite.
 
 
 ## Commandes client
