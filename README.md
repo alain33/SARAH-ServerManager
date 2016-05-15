@@ -48,9 +48,9 @@ on top of:
 - [Gestion de la version des fichiers](#gestion-de-la-version-des-fichiers)	
 - [Règles client](#Règles-client)
 - [Développement](#développement)
-	- [Règle client exécutée sur le ServerManager](#Règle-client-exécutée-sur-le-ServerManager)
+	- [Règle client exécutée sur le ServerManager](#règle-exécutée-sur-le-servermanager)
 	- [API](#api)
-	- [Exemples](#Exemples)
+	- [Exemples](#exemples)
 	- [HTTP format](#http-format)
 - [Versions](#versions)
 
@@ -407,8 +407,6 @@ Autre exemple qui convient pour d'autres micros ou une Kinect (chez moi... à vo
 ##### Important:
 - Ces valeurs de paramètres 'silence' ont été faites dans mon environement et ne reflètent pas forcément ce qui fonctionne le mieux chez vous. Faites des tests et si l'enregistrement ne s'intérrompt pas automatiquement après un silence, changez les valeurs.
 - Ne modifiez que ce qui il y après 'silence'.
-- Dans tous les cas, <FileName> doit être toujours présent.
-
 
 #### intercom#timeRecord (v:Integer)
 Délais maximal d'enregistrement du message vocale, après ce délais, l'action est intérrompu et le message n'est pas envoyé.
@@ -578,7 +576,7 @@ où :
 
 Tous les autres tags ajoutés dans une règle sont directement liés à la commande développée dans un plugin de ServerManager.
 
-Voir l'exemple N°3 [action.js](#Exemples) plus bas.
+Voir l'exemple N°3 [action.js](#exemples) plus bas.
 
 ### Trigger
 
@@ -621,11 +619,12 @@ Retourne un tableau des [propriétés](#serveur-1) de ServerManager.
 - action.js:
 	- Exemple illustrant la possibilité d'avoir une règle lancée sur un client et exécutée sur le ServerManager.
 	- Prenons par exemple une nouvelle règle qui doit fermer la connexion avec le ServerManager pour tous les clients simultanément.
-	- La règle [SARAH ferme la connexion avec le serveur](#sarah-ferme-la-connexion-avec-le-serveur) existe dans le clientManager.xml et est associée au client qui exécute la commande. Cette commande peut être envoyée à tous les clients par le ServerManager, il suffit de créer une nouvelle règle "SARAH Ferme toutes les connexions" dans le clientManager.xml.
+	- La règle [SARAH ferme la connexion avec le serveur](#sarah-ferme-la-connexion-avec-le-serveur) existe dans le clientManager.xml et est associée au client qui exécute la commande. Cette commande peut être envoyée à tous les clients par le ServerManager, il suffit de créer une nouvelle règle "SARAH ferme la connexion..."(#sarah-ferme-la-connexion) dans le clientManager.xml.
 	
 	- Détail de la règle (que vous pouvez retrouver dans le clientManager.xml):
 		- out.action.command="doAction" et out.action.jsaction 
-			- Obligatoire, voir [Règle exécutée sur le ServerManager](#Règle-exécutée-sur-le-ServerManager)
+			- Obligatoire, voir [Règle exécutée sur le ServerManager](#règle-exécutée-sur-le-ServerManager)
+		
 		Les tags suivants sont liés au développement de l'action dans le plugin:
 		- out.action.plugin="clientManager" 
 			- Attribut nom du plugin SARAH à exécuter.
@@ -637,7 +636,7 @@ Retourne un tableau des [propriétés](#serveur-1) de ServerManager.
 			- Attributs de la commande à exécuter dans le plugin 'clientManager' où chaque paire d'attribut(attribut=valeur) est séparé par un tilde (~).
 			- _attributes. pour les attributs exécutés par le client SARAH (exemple, un _attributes.tts).
 			
-	- Cette règle est fonctionnelle (vous pouvez l'utiliser) et générique, elle peut très bien être utilisée pour d'autres règles de votre multi-room.
+	- Cet exemple est fonctionnel (vous pouvez l'utiliser) et générique, elle peut très bien être utilisée pour d'autres règles de votre multi-room.
 	
 
 ### HTTP format
