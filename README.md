@@ -16,7 +16,7 @@ on top of:
 	
 ## Comment ?
 - L'application est en 2 parties:
-	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multi-room et les clients Sarah qui se connectent.
+	- Une première partie "ServerManager", application nodejs indépendante, qui gère le multi-room, les clients Sarah qui se connectent et envoie/recoit des informations du/vers les clients.
 	- Une seconde partie "clientManager", plugin dans chaque client Sarah, qui envoie/recoit des informations du/vers le ServerManager.
 - Communication synchrone entre le ServerManager et tous les clientManager.
 - Gestion des fichiers:
