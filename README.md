@@ -7,12 +7,12 @@ on top of:
 * NodeJS (ExpressJS) server for Internet of Things communication
 
 ## Pourquoi ?
-- Pour que chaque Sarah dans le multi-room soit vu comme un client d'un système global.
+- Pour que chaque SARAH (client/serveur) dans le multi-room soit vu comme un client d'un système global.
 - Pour avoir un système multi-room toujours opérationnel même en cas de plantage d'un client ou de ce qui a été défini comme "Serveur".
-- Pour supprimer les latences réseaux dû au montage de répertoires.
 - Pour populer les informations (plugins, mise à jour, etc...) sans se connecter sur chaque système.
 - Pour que tous les clients soient synchronisés, puissent communiquer et partager des informations avec les autres clients.		
 - Pour simplifier la communication de tous les clients avec une box domotique en centralisant les actions.
+- Pour supprimer les latences réseaux dû au montage de répertoires.
 	
 ## Comment ?
 - L'application est en 2 parties:
