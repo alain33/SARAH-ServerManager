@@ -21,8 +21,11 @@ on top of:
 - Communication synchrone entre le ServerManager et tous les clientManager.
 - Gestion des fichiers:
 	- Création, Modification, Suppression d'un fichier ou d'un répertoire:
-		- Sur le ServerManager: sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyée lors de sa prochaine connexion.
-		- Sur un client: sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour vers tous les autres clients.
+		- Sur le ServerManager:
+			- Sera automatiquement mis à jour sur tous les clients. Si un client est déconnecté, la modification sera envoyée lors de sa prochaine connexion.
+			- Vous pouvez copier/modifier un fichier, un répertoire entier ou tous vos plugins, ils seront envoyés/modifiés vers tous les clients en une seule fois.
+		- Sur un client: 
+			- Sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour vers tous les autres clients.
 - Gestion des versions de fichiers:
 	- Permet de gérer une version différente de fichier en fonction de chaque client.
 	- Chaque client peut avoir des plugins, des xml, des js et des fichiers de propriétés différents.
