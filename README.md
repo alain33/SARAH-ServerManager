@@ -582,14 +582,23 @@ Voir l'exemple N°3 [action.js](#exemples) plus bas.
 
 Pour arrêter l'écoute de fichier(s) le temps d'une commande sur ce fichier:
 ```javascript
-  SARAH.trigger('clientManager',{key:'unwatch', files: [file1, file2]});
+	SARAH.trigger('clientManager',{key:'unwatch', files: [file1, file2]});
 ```
 
 Pour remettre l'écoute sur un fichier(s) après un trigger 'unwatch':
 ```javascript
-  SARAH.trigger('clientManager',{key:'watch', files: [file1, file2]});
+  client.SARAH.trigger('clientManager',{key:'watch', files: [file1,file2], done : callback});
 ```
 
+- files: un tableau de fichier(s)
+- done: une fonction qui sera exécutée après la re-synchronisation du/des fichier(s), par exemple, une sauvegarde du fichier pour l'envoyer sur le ServerManager
+
+##### exemple:
+```javascript
+SARAH.trigger('clientManager',{key:'unwatch', files: [__dirname + '/lib/db/tvSchedule.db']});
+
+SARAH.trigger('clientManager',{key:'watch', files: [__dirname + '/tvSchedule.db'], done : (callback) ? callback : null });
+```
 
 ### API
 ```javascript
@@ -623,7 +632,7 @@ Retourne un tableau des [propriétés](#serveur-1) de ServerManager.
 	
 	- Détail de la règle (que vous pouvez retrouver dans le clientManager.xml):
 		- out.action.command="doAction" et out.action.jsaction 
-			- Obligatoire, voir [Règle exécutée sur le ServerManager](#règle-exécutée-sur-le-ServerManager)
+			- Obligatoire, voir [Règle exécutée sur le ServerManager](#règle-exécutée-sur-le-servermanager)
 		
 		Les tags suivants sont liés au développement de l'action dans le plugin:
 		- out.action.plugin="clientManager" 
