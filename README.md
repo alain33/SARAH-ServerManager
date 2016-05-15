@@ -590,7 +590,7 @@ Pour arrêter l'écoute de fichier(s) le temps d'une commande sur ce fichier:
 
 Pour remettre l'écoute sur un fichier(s) après un trigger 'unwatch':
 ```javascript
-  client.SARAH.trigger('clientManager',{key:'watch', files: [file1,file2], done : callback});
+  SARAH.trigger('clientManager',{key:'watch', files: [file1,file2], done : callback});
 ```
 
 - files: un tableau de fichier(s)
