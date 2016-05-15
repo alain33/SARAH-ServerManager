@@ -631,7 +631,7 @@ Retourne un tableau des [propriétés](#serveur-1) de ServerManager.
 - action.js:
 	- Exemple illustrant la possibilité d'avoir une règle lancée sur un client et exécutée sur le ServerManager.
 	- Prenons par exemple une nouvelle règle qui doit fermer la connexion avec le ServerManager pour tous les clients simultanément.
-	- La règle [SARAH ferme la connexion avec le serveur](#sarah-ferme-la-connexion-avec-le-serveur) existe dans le clientManager.xml et est associée au client qui exécute la commande. Cette commande peut être envoyée à tous les clients par le ServerManager, il suffit de créer une nouvelle règle "SARAH ferme la connexion..."(#sarah-ferme-la-connexion) dans le clientManager.xml.
+	- La règle [SARAH ferme la connexion avec le serveur](#sarah-ferme-la-connexion-avec-le-serveur) existe dans le clientManager.xml et est associée au client qui exécute la commande. Cette commande peut être envoyée à tous les clients par le ServerManager, il suffit de créer une nouvelle règle [SARAH ferme la connexion...](#sarah-ferme-la-connexion) dans le clientManager.xml.
 	
 	- Détail de la règle (que vous pouvez retrouver dans le clientManager.xml):
 		- out.action.command="doAction" et out.action.jsaction 
