@@ -25,17 +25,17 @@ on top of:
 		- Sur un client: sera automatiquement mis à jour sur le ServerManager qui l'enverra à son tour vers tous les autres clients.
 - Gestion des versions de fichiers:
 	- Permet de gérer une version différente de fichier en fonction de chaque client.
-	- Chaque client peut donc avoir des plugins, des xml, des js et des fichiers de propriétés différents.
-- Gestion de requêtes HTTP:
-	- Le ServerManager peut recevoir et centraliser des requètes HTTP qui sont envoyés automatiquement vers tous les clients ou un client dédié.
+	- Chaque client peut avoir des plugins, des xml, des js et des fichiers de propriétés différents.
+- Gestion de requètes HTTP:
+	- Le ServerManager peut recevoir et centraliser des requètes HTTP.
 - Gestion de l'application des modifications:
-	- Si nécessaire, redémarrage automatique du serveur et/ou du client de chaque client Sarah pour enregistrer des modifications de fichiers en fonction du type (js,xml,prop,etc...).
+	- Si nécessaire, redémarrage automatique du serveur et/ou du client Sarah de chaque client de ServerManager pour enregistrer des modifications de fichiers en fonction du type (js,xml,prop,etc...).
 - Alerte de déconnexion:
-	- Un message d'alerte est envoyé lorsqu'un client ou le ServerManager se déconnecte afin d'avertir d'un problème sur un composant du multi-room.
+	- Un message d'alerte est envoyé lorsqu'un client ou le ServerManager se déconnecte afin d'avertir d'un problème de fonctionnement.
 - Mode inter-comm:
 	- Permet d'envoyer un message vocale depuis un client vers un autre client ou tous les clients via le ServerManager.
 - Evolutif:
-	- Répertoire plugins sur le ServerManager pour développer ses propres actions pour le ServerManager, par exemple pour ajouter des requètes HTTP, gérer et modifier des fichiers, etc...
+	- Répertoire plugins sur le ServerManager pour développer ses propres actions pour le ServerManager, par exemple pour ajouter des requètes HTTP, gérer et modifier des fichiers, lancer une règle sur un client et l'exécuter sur tous les autres clients, etc...
 		
 ## Table des matières		
 - [Compatibilité](#compatibilité)	
@@ -46,12 +46,13 @@ on top of:
 	- [Serveur](#serveur-1)
 	- [Client](#client-1)
 - [Gestion de la version des fichiers](#gestion-de-la-version-des-fichiers)	
-- [Commandes client](#commandes-client)
+- [Règles client](#Règles-client)
 - [Développement](#développement)
+	- [Règle client exécutée sur le ServerManager](#Règle-client-exécutée-sur-le-ServerManager)
 	- [API](#api)
-	- [Exemples](#exemples-de-développement)
-	- [Requête HTTP](#requête-http)
-	- [Versions](#versions)
+	- [Exemples](#Exemples)
+	- [HTTP format](#http-format)
+- [Versions](#versions)
 
 ## Compatibilité
 - Le ServerManager peut être installé sur Windows ou Unix.
@@ -345,6 +346,11 @@ Pour minimiser la fenêtre du serveur lors d'un redémarrage.
 #### restart#hideServer (v:Boolean)
 Pour cacher la fenêtre du serveur lors d'un redémarrage.
 
+
+#### notification#sendNotif (v:Boolean)
+Défini si une notification est envoyée si le ServerManager se déconnecte.
+
+
 #### notification#sendType (v:String)
 Type de notification lors d'une déconnexion du ServerManager.
 
@@ -359,9 +365,9 @@ Le type défini dans cette propriété est le nom du fichier js associé dans le
 - "SMSuser" et "SMStoken" pour free SMS.
 
 Pour créer un autre type d'envoi:
-- Copiez 1 des 2 fichiers js du répertoire #clientManager#/manager avec le nom que vous voulez et modifiez-le pour votre type d'envoi.
+- Copiez 1 des 2 fichiers js du répertoire #clientManager#/manager avec le nom que vous voulez et modifiez-le pour votre type d'envoi (attention aux noms de fonctions).
 - Utilisez les paramètres d'identification par défaut où ajoutez les votres dans le #clientManager#/clientManager.prop.
-- Changer la valeur de la propriété 'sendType' par le nom de votre fichier js.
+- Changez la valeur de la propriété 'sendType' par le nom de votre fichier js.
 - Aucune autre modification n'est requise, le fichier js est automatiquement chargé par la valeur de la propriété 'sendType'. 
 	
 	
@@ -378,8 +384,34 @@ Exemple pour un répertoire d'installation C:\\Apps\\sox-14-4-2 :
 		.....
 ```
 
+#### intercom#params (v:String)
+Paramètres d'exécution de l'application Sox.
+
+Référez-vous à la documentation de Sox pour le détail.
+
+Les paramètres de silence peuvent changer avec le micro utilisé.
+
+Par exemple, ce qui convient bien pour un micro normal:
+```text
+	sox -q -r 16000 -b 16 -t waveaudio 0 -t wav <FileName> silence 1 0.5 3% 1 2.0 3%
+```
+- silence 1 0.5 3% 1 2.0 3% où:
+	- 0.5 3% correspond à 1 seconde de silence pour signifier un début d'enregistrement avec 3% de bruit sonore.
+	- 2.0 3% correspond à 2 secondes de silence après un message pour intérrompre l'enregistrement avec 3% de bruit sonore.
+	
+Autre exemple qui convient pour d'autres micros ou une Kinect (chez moi... à voir):
+```text
+	sox -q -r 16000 -b 16 -t waveaudio 0 -t wav <FileName> silence 1 0.1 0.8% 1 1.0 0.8%
+```
+
+##### Important:
+- Ces valeurs de paramètres 'silence' ont été faites dans mon environement et ne reflètent pas forcément ce qui fonctionne le mieux chez vous. Faites des tests et si l'enregistrement ne s'intérrompt pas automatiquement après un silence, changez les valeurs.
+- Ne modifiez que ce qui il y après 'silence'.
+- Dans tous les cas, <FileName> doit être toujours présent.
+
+
 #### intercom#timeRecord (v:Integer)
-Délais maximal d'enregistrement du message vocale, après ce délais, l'action est intérrompu.
+Délais maximal d'enregistrement du message vocale, après ce délais, l'action est intérrompu et le message n'est pas envoyé.
 
 
 ## Gestion de la version des fichiers
@@ -443,10 +475,10 @@ plugins
 Il est préférable de créer une arborescence de répertoires et fichiers avant de connecter les clients au ServerManager afin d'éviter une synchronisation sur un trop grand nombre d'évenements systèmes simultanément sur ces fichiers (création, modification, renommage, suppression, etc...) ou de réaliser cette arborescence en dehors des répertoires synchronisés puis de la copier ensuite.
 
 
-## Commandes client
-Quelques commandes sont définies pour gérer la connexion avec le ServerManager
+## Règles client
+Quelques règles sont définies pour gérer la connexion avec le ServerManager
 
-#### SARAH ferme la connection avec le serveur
+#### SARAH ferme la connexion avec le serveur
 Coupe la connexion avec le ServerManager pour le client.
 
 #### SARAH connecte-toi au serveur
@@ -454,13 +486,28 @@ Etabli une connexion avec le ServerManager pour le client.
 
 Normalement cette connexion est automatique si le client est démarré après le ServerManager mais il peut arriver dans certains cas d'avoir à gérer cette connexion.
 
+Faites donc attention à l'ordre de chargement du ServerManager (1) et des clients SARAH (2).
+
 #### SARAH tu es connectée au serveur ?
 Retourne l'état de connexion avec le ServerManager.
+
+#### SARAH Ferme la connexion...
+Ferme la connexion des clients définis pendant la commande. A savoir:
+- commande sans client: ferme la connexion avec le ServerManager pour tous les clients.
+- commande avec un client: le message est envoyé pour ce client uniquement, exemple:
+	- SARAH Ferme la connexion de la chambre
+
+#### SARAH redémarre...
+Redémarre le server et le client SARAH des clients définis pendant la commande. A savoir:
+- commande sans client: redémarre tous les clients.
+- commande avec un client: redémarre ce client uniquement, exemple:
+	- SARAH redémarre la chambre.
+
 
 #### SARAH intercom (ou "SARAH mode communication")
 Déclenche le mode inter-com avec un autre client.
 
-Vous disposez du délais de la propriété "intercom#timeRecord" pour enregistrer un message afin d'eviter et annuler les faux positifs. 
+Vous disposez du délais de la propriété "intercom#timeRecord" pour enregistrer un message afin d'éviter et annuler les faux positifs. 
 Après un silence, l'enregistrement est automatiqument coupé et le message est envoyé.
 
 ##### Important:
@@ -479,6 +526,7 @@ Les développements sont à réaliser dans le répertoire plugins du ServerManag
 
 Le développement d'un plugin est identique au développement d'un plugin pour SARAH. Ils sont automatiquement chargés lors de l'initialisation de ServerManager et rechargés lors d'une modification.
 
+### Fonctions
 2 fonctions principales sont à définir:
 - exports.init
 	- Exécutée à l'initialisation du plugin 
@@ -507,13 +555,43 @@ Déclaré à l'initialisation du module [winston](https://github.com/winstonjs/w
 ```javascript
 exports.action = function (data, logger, app) {
 	
-	// exécute les actions par requète HTTP
+	// exécute les actions HTTP
 	
 }	
 ```
 - data: objet HTTP pour l'action
 - app:  Objet global de l'application ServerManager
 - logger: Objet de gestion des logs. Les messages sont enregistrés dans le fichier logs/log du jour de ServerManager.
+
+
+### Règle exécutée sur le ServerManager
+Pour lancer une règle sur un client et l'exécuter sur le ServerManager:
+- Créer une règle dans le fichier clientManager.xml des clients (ou d'un seul) sous la forme suivante:
+```xml	
+	<item>REGLE<tag>out.action.command="doAction";out.action.jsaction="NOM_DU_PLUGIN_SERVERMANAGER";....;....;.....</tag></item>
+```	
+où :
+- out.action.command="doAction"	
+	- Attribut d'exécution de la règle, doit toujours être présent.
+- out.action.jsaction="NOM_DU_PLUGIN_SERVERMANAGER"
+	- Le nom du fichier js dans le répertoire plugin de ServerManager.
+
+Tous les autres tags ajoutés dans une règle sont directement liés à la commande développée dans un plugin de ServerManager.
+
+Voir l'exemple N°3 [action.js](#Exemples) plus bas.
+
+### Trigger
+
+Pour arrêter l'écoute de fichier(s) le temps d'une commande sur ce fichier:
+```javascript
+  SARAH.trigger('clientManager',{key:'unwatch', files: [file1, file2]});
+```
+
+Pour remettre l'écoute sur un fichier(s) après un trigger 'unwatch':
+```javascript
+  SARAH.trigger('clientManager',{key:'watch', files: [file1, file2]});
+```
+
 
 ### API
 ```javascript
@@ -530,24 +608,52 @@ Retourne un tableau des clients connectés au multi-room où pour chaque objet '
 ```javascript
 var config = app.Config.getConfig();
 ```
-Retourne un tableau des [propriétés](#serveur-1) de ServerManager
+Retourne un tableau des [propriétés](#serveur-1) de ServerManager.
 
 
-### Exemples de développement
-2 exemples de plugins sont dans le répertoire plugins de ServerManager:
-- speakTo.js : Pour envoyer un tts vers le(s) client(s) de votre choix.
+### Exemples
+3 exemples de plugins sont dans le répertoire plugins de ServerManager:
+- speakTo.js : 
+	- Exemple de HTTP GET provenant d'une source (box domotique) pour envoyer un tts vers le(s) client(s) SARAH de votre choix.
 - tvSchedule.js: 
-	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences (et une box domotique) qui va envoyer la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit diffusé vers tous les clients automatiquement. Ne reste plus qu'au plugin SARAH concerné de lire ce fichier et executer ou ignorer l'action.
+	- Exemple de HTTP GET provenant d'une source (box domotique) sur l'état d'un capteur de présence pour modifier un fichier synchronisé.
+	- Prenons un exemple simple et supposons que vous désirez que SARAH vous prévienne si l'heure d'un programme TV qui vous interesse est arrivé. Le problème est qu'il faut savoir où envoyer le message de SARAH sinon tous les clients vont se mettre à vous prévenir dans toutes les pièces... Ce qui est plutôt embêtant dans un mode multi-room qui se respecte. Il faut donc des capteurs de présences qui va envoyer (via une box domotique) la pièce où il y a du monde. Il suffira ensuite d'écrire cette valeur dans un fichier qui se trouve dans un répertoire synchronisé pour qu'il soit envoyé automatiquement vers tous les clients. Ne reste plus qu'au plugin SARAH concerné de lire ce fichier et executer ou ignorer l'action dans chaque client.
+- action.js:
+	- Exemple illustrant la possibilité d'avoir une règle lancée sur un client et exécutée sur le ServerManager.
+	- Prenons par exemple une nouvelle règle qui doit fermer la connexion avec le ServerManager pour tous les clients simultanément.
+	- La règle [SARAH ferme la connexion avec le serveur](#sarah-ferme-la-connexion-avec-le-serveur) existe dans le clientManager.xml et est associée au client qui exécute la commande. Cette commande peut être envoyée à tous les clients par le ServerManager, il suffit de créer une nouvelle règle "SARAH Ferme toutes les connexions" dans le clientManager.xml.
 	
-### Requête HTTP
+	- Détail de la règle (que vous pouvez retrouver dans le clientManager.xml):
+		- out.action.command="doAction" et out.action.jsaction 
+			- Obligatoire, voir [Règle exécutée sur le ServerManager](#Règle-exécutée-sur-le-ServerManager)
+		Les tags suivants sont liés au développement de l'action dans le plugin:
+		- out.action.plugin="clientManager" 
+			- Attribut nom du plugin SARAH à exécuter.
+		- out.action.remoteCmd="unicode"
+			- Attribut commande à exécuter dans le plugin 'actions'
+		- out.action.room="all" ou out.action.room="Salon" 
+			- Attribut des clients qui exécutent la commande ('all' ou un client spécifique)
+		- out.action.options="command=closeSocket~_attributes.tts=D'accord."
+			- Attributs de la commande à exécuter dans le plugin 'clientManager' où chaque paire d'attribut(attribut=valeur) est séparé par un tilde (~).
+			- _attributes. pour les attributs exécutés par le client SARAH (exemple, un _attributes.tts).
+			
+	- Cette règle est fonctionnelle (vous pouvez l'utiliser) et générique, elle peut très bien être utilisée pour d'autres règles de votre multi-room.
+	
+
+### HTTP format
+HTTP GET pour ServerManager.
+
+Page http:
+- http://IP adress ServerManager:Port/SM/plugin_name
+
 Format:
 - http://IP adress ServerManager:Port/SM/plugin?param1=valeur&param2=valeur
 
-Exemple:
+Exemple avec un plugin tvSchedule:
 - http://192.168.1.67:3000/SM/tvSchedule?command=setConfig&room=Salon
 
 
 Versions
 --------
-1.0
+1.0 (08-05-2016)
 - Première version

@@ -163,7 +163,8 @@ var clientChange = function (from,cltItem,cltDir,callback) {
 	if (srvItemDir) {
 		fs.stat(srvItemDir, function(err, stats) {
 			if (stats) { // exist
-				if (stats.mtime.getTime() < cltItem.modify && cltItem.size != stats.size) {
+				//if (stats.mtime.getTime() < cltItem.modify && cltItem.size != stats.size) {
+				if (stats.mtime.getTime() < cltItem.modify) {
 					watcher.unwatch(srvItemDir);
 					logger.info('Update %s from %s', cltItem.name,from);
 					callback(srvItemDir,watcher);

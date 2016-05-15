@@ -12,7 +12,7 @@ var routes = function(req, res, next){
 	
 
 	
-var run = function(cmd, rQs, res, cb){
+var run = function(cmd, rQs, res){
 
   var start = (new Date()).getTime();
   try {
@@ -29,6 +29,7 @@ var run = function(cmd, rQs, res, cb){
 }
 	
 var ScriptManager = {
+  'run' : run,
   'routes': routes
 }
 

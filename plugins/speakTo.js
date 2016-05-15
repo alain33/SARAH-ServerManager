@@ -4,7 +4,6 @@ var _ = require('underscore'),
 	
 exports.init = function(app, logger){
 	log = logger;
-	// nothing
 }
 
 

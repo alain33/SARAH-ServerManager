@@ -22,12 +22,16 @@ var setSockets = function (http) {
 			client.emit('connected');
 		});
 		
+		client.on('set_action', function (from, data) {
+			app.Script.run (data.jsaction, data);
+		});
+		
 		client.on('intercom', function (item, from, cltDir, room) {
 			var speakTo = _.filter(clients, function(num){ 
 				if (room == 'all')	
-					return  num.Obj.id != client.id;
+					return  num.id != client.id;
 				else 
-					return  num.Obj.id != client.id && room == num.Obj.id;
+					return  num.id != client.id && room == num.id;
 			});
 			
 			if (speakTo && speakTo.length > 0) {
